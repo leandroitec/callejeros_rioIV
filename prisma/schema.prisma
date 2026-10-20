@@ -1,0 +1,47 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Pet {
+  id           String      @id @default(uuid())
+  name         String
+  status       String      // "EN_ADOPCION" | "PERDIDO" | "URGENTE" | "ADOPTADO"
+  species      String      // "PERRO" | "GATO"
+  ageCategory  String      // "CACHORRO" | "JOVEN" | "ADULTO" | "SENIOR"
+  ageApprox    String?     // Ej: "2 AÑOS", "4 meses"
+  size         String      // "PEQUEÑO" | "MEDIANO" | "GRANDE"
+  sex          String?     // "MASCULINO" | "FEMENINO"
+  sociability  String?     // "SOCIABLE" | "SALVAJE" | "TRANQUILO"
+  healthState  String?     // "Sano, Vacunas al Día"
+  notes        String?     // "Dependencia Medicación: ..."
+  goodWithKids Boolean     @default(true)
+  goodWithPets Boolean     @default(true)
+  location     String      // Barrio de Río Cuarto (ej: "Parque Sarmiento")
+  description  String
+  imageUrl     String
+  isCastrated  Boolean     @default(false)
+  isVaccinated Boolean     @default(false)
+  isFavorite   Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  reports      Report[]
+}
+
+model Report {
+  id           String      @id @default(uuid())
+  petId        String?
+  pet          Pet?        @relation(fields: [petId], references: [id])
+  type         String      // "EXTRAVIO" | "AVISTAMIENTO"
+  contactName  String
+  contactPhone String
+  neighborhood String      // Barrio de Río Cuarto
+  description  String
+  imageUrl     String?
+  resolved     Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+}

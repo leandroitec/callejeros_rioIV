@@ -1,0 +1,276 @@
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import {
+  AlertTriangle,
+  Camera,
+  MapPin,
+  Phone,
+  User,
+  FileText,
+  Upload,
+  ChevronLeft,
+  CheckCircle,
+} from 'lucide-react';
+import { SuccessModal } from '@/components/modals/SuccessModal';
+
+export default function ReportarExtravioPage() {
+  const [reportType, setReportType] = useState<'EXTRAVIO' | 'AVISTAMIENTO'>('EXTRAVIO');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const neighborhoods = [
+    'Parque Sarmiento',
+    'Banda Norte',
+    'Centro / Plaza Roca',
+    'Alberdi',
+    'Castelli',
+    'Bimaco',
+    'Río Limay',
+    'Golf Club',
+    'Fénix',
+    'Universidad / Ruta 36',
+    'Otro barrio de Río Cuarto',
+  ];
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImagePreview(url);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulación de envío asíncrono en cliente sin recargar la página
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    setIsSubmitting(false);
+    setIsSuccessModalOpen(true);
+    e.currentTarget.reset();
+    setImagePreview(null);
+  };
+
+  return (
+    <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-6">
+      {/* Barra superior con volver */}
+      <div className="flex items-center gap-3">
+        <Link
+          href="/"
+          className="w-11 h-11 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300"
+          aria-label="Volver a la portada"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </Link>
+        <div>
+          <span className="text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400">
+            Alerta Comunitaria
+          </span>
+          <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white">
+            Reportar Extravío
+          </h1>
+        </div>
+      </div>
+
+      {/* Banner de ayuda rápida mobile */}
+      <div className="p-4 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 flex items-start gap-3">
+        <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+        <p className="text-xs sm:text-sm text-red-900 dark:text-red-200 leading-relaxed">
+          <strong>¿Perdiste a tu mascota o viste un animal en peligro?</strong> Completá este formulario en 1 minuto. Se difundirá de inmediato en las redes y mapa de Río Cuarto.
+        </p>
+      </div>
+
+      {/* Formulario Asíncrono */}
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-6"
+      >
+        {/* Selector de Tipo de Reporte */}
+        <div className="space-y-2">
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            Tipo de Situación
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => setReportType('EXTRAVIO')}
+              className={`p-3 rounded-2xl font-heading font-bold text-xs sm:text-sm text-center border-2 transition-all min-h-[48px] flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300 ${
+                reportType === 'EXTRAVIO'
+                  ? 'bg-red-600 text-white border-red-600 shadow-md scale-102'
+                  : 'bg-slate-50 dark:bg-slate-900/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-slate-300'
+              }`}
+            >
+              <span>🚨 Perdí mi Mascota</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setReportType('AVISTAMIENTO')}
+              className={`p-3 rounded-2xl font-heading font-bold text-xs sm:text-sm text-center border-2 transition-all min-h-[48px] flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 ${
+                reportType === 'AVISTAMIENTO'
+                  ? 'bg-cyan-600 text-white border-cyan-600 shadow-md scale-102'
+                  : 'bg-slate-50 dark:bg-slate-900/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-slate-300'
+              }`}
+            >
+              <span>👀 Vi un Animal Perdido</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Nombre del animal o descripción rápida */}
+        <div className="space-y-1.5">
+          <label
+            htmlFor="pet-name"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+          >
+            Nombre de la Mascota / Referencia
+          </label>
+          <div className="relative">
+            <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input
+              id="pet-name"
+              name="petName"
+              type="text"
+              required
+              placeholder="Ej: Manchita, o 'Perro negro con collar rojo'"
+              className="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-orange-300 dark:focus:ring-orange-800 transition-all min-h-[48px]"
+            />
+          </div>
+        </div>
+
+        {/* Barrio de Río Cuarto */}
+        <div className="space-y-1.5">
+          <label
+            htmlFor="neighborhood"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+          >
+            Barrio / Zona de Río Cuarto
+          </label>
+          <div className="relative">
+            <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <select
+              id="neighborhood"
+              name="neighborhood"
+              required
+              defaultValue=""
+              className="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-orange-300 dark:focus:ring-orange-800 transition-all min-h-[48px] appearance-none"
+            >
+              <option value="" disabled>
+                Seleccionar barrio de Río Cuarto...
+              </option>
+              {neighborhoods.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Teléfono de Contacto */}
+        <div className="space-y-1.5">
+          <label
+            htmlFor="contact-phone"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+          >
+            Teléfono de Contacto (WhatsApp)
+          </label>
+          <div className="relative">
+            <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input
+              id="contact-phone"
+              name="contactPhone"
+              type="tel"
+              required
+              placeholder="Ej: 358 154 123456"
+              className="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-orange-300 dark:focus:ring-orange-800 transition-all min-h-[48px]"
+            />
+          </div>
+        </div>
+
+        {/* Carga de Imagen */}
+        <div className="space-y-1.5">
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            Foto del Animal (Crucial para reconocimiento)
+          </label>
+          <label
+            htmlFor="pet-image"
+            className="relative flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-3xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-all group focus-within:ring-4 focus-within:ring-orange-300"
+          >
+            {imagePreview ? (
+              <div className="relative w-32 h-32 rounded-2xl overflow-hidden shadow-md">
+                <img src={imagePreview} alt="Vista previa de imagen cargada" className="w-full h-full object-cover" />
+              </div>
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-center text-slate-500 dark:text-slate-400">
+                <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Camera className="w-6 h-6" />
+                </div>
+                <span className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200">
+                  Tocá para tomar una foto o subir desde tu celular
+                </span>
+                <span className="text-[11px] text-slate-400">JPG o PNG hasta 5MB</span>
+              </div>
+            )}
+            <input
+              id="pet-image"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="sr-only"
+            />
+          </label>
+        </div>
+
+        {/* Descripción Breve */}
+        <div className="space-y-1.5">
+          <label
+            htmlFor="description"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+          >
+            Descripción y Rasgos Particulares
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            rows={3}
+            required
+            placeholder="Color de pelaje, tamaño, si lleva collar o placa, comportamiento tímido/asustadizo, etc."
+            className="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-orange-300 dark:focus:ring-orange-800 transition-all"
+          />
+        </div>
+
+        {/* Botón de Envío (con los 5 estados interactivos) */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full btn-primary min-h-[52px] text-base font-extrabold shadow-lg shadow-orange-600/20"
+        >
+          {isSubmitting ? (
+            <span className="flex items-center gap-2">
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span>Publicando reporte en Río Cuarto...</span>
+            </span>
+          ) : (
+            <span>Publicar Reporte de Extravío</span>
+          )}
+        </button>
+      </form>
+
+      {/* MODAL DE ÉXITO SUPERPUESTO (Figma: Modal de Confirmación) */}
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        onClose={() => setIsSuccessModalOpen(false)}
+        title="¡Reporte publicado con éxito!"
+        message="Reporte publicado con éxito. ¡Gracias por ayudar a los callejeritos de Río Cuarto! Ya se encuentra visible para toda la comunidad."
+        actionText="Ver Catálogo de Adopciones"
+        actionHref="/adopciones"
+      />
+    </div>
+  );
+}
