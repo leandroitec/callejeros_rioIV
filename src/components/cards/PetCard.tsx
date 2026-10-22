@@ -90,9 +90,9 @@ export function PetCard({ pet }: PetCardProps) {
         </div>
       </div>
 
-      {/* Cuerpo de la Tarjeta */}
-      <div className="p-5 flex flex-col flex-1 justify-between gap-4">
-        <div>
+      {/* Cuerpo de la Tarjeta (Ley de Gestalt: Proximidad cohesionada mediante p-4) */}
+      <div className="p-4 flex flex-col flex-1 justify-between gap-3 sm:gap-3.5">
+        <div className="space-y-2">
           {/* Nombre en Tipografía de Encabezado Negrita (Figma) */}
           <h3
             id={`pet-name-${pet.id}`}
@@ -101,13 +101,13 @@ export function PetCard({ pet }: PetCardProps) {
             {pet.name}
           </h3>
 
-          {/* Detalles Rápidos (Edad y Castración) */}
-          <div className="mt-1.5 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
-            <span className="bg-slate-100 dark:bg-slate-700/60 px-2.5 py-1 rounded-lg">
+          {/* Detalles Rápidos (Edad y Castración en Proximidad Directa) */}
+          <div className="flex flex-wrap items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300">
+            <span className="bg-slate-100 dark:bg-slate-700/60 px-2 py-0.5 rounded-md">
               Edad: {pet.ageApprox}
             </span>
             <span
-              className={`px-2.5 py-1 rounded-lg ${
+              className={`px-2 py-0.5 rounded-md ${
                 pet.isCastrated
                   ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300'
                   : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300'
@@ -118,18 +118,18 @@ export function PetCard({ pet }: PetCardProps) {
           </div>
 
           {/* Ubicación Barrial */}
-          <div className="mt-2.5 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+          <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
             <MapPin className="w-3.5 h-3.5 text-orange-500 shrink-0" />
             <span className="truncate">{pet.location}</span>
           </div>
         </div>
 
-        {/* Botón Primario de Acción (Affordance Visual: Naranja Primario con Elevación Táctil) */}
+        {/* Botón Primario de Acción: Adoptar / Conocer (Los 5 Estados Vivos) */}
         <Link
           href={`/adopciones/${pet.id}`}
-          className="w-full min-h-[48px] px-4 py-3 rounded-2xl font-heading font-bold text-sm text-center text-white bg-orange-600 hover:bg-orange-700 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 shadow-md shadow-orange-600/25 transition-all duration-200 flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900"
+          className="w-full min-h-[46px] px-4 py-2.5 rounded-2xl font-heading font-bold text-sm text-center text-white bg-orange-500 hover:bg-orange-600 hover:shadow-lg active:scale-95 shadow-md shadow-orange-500/20 transition-all duration-200 flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900 mt-1"
         >
-          <span>Conocer a {pet.name.split(' ')[0]}</span>
+          <span>Adoptar a {pet.name.split(' ')[0]}</span>
         </Link>
       </div>
     </article>

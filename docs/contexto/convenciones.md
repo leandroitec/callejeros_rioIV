@@ -23,17 +23,20 @@ La paleta cromática está diseñada para generar empatía, energía y claridad,
 
 ---
 
-## 2. Escala Tipográfica Modular
+## 2. Escala Tipográfica Modular y Estricta (Clase 5: Estética Funcional)
 
 La combinación tipográfica equilibra cercanía afectiva con máxima legibilidad técnica:
 
-- **Títulos y Encabezados (`h1`, `h2`, `h3`, `h4`)**:
-  - Fuente: **`Poppins`** (alternativa: **`Nunito`**) en pesos `font-bold` (700) y `font-semibold` (600).
-  - Aporta un tono redondeado, cálido, optimista y amigable para descontracturar una problemática social sensible.
-  - Escala: `h1` (32px móvil / 48px desktop), `h2` (24px móvil / 32px desktop), `h3` (20px móvil / 24px desktop).
-- **Cuerpo de Texto y Formularios (`p`, `span`, `input`, `label`)**:
-  - Fuente: **`Inter`** (alternativa: **`Roboto`**) en pesos `font-normal` (400) y `font-medium` (500).
-  - Tamaño base: **`16px` (`text-base`)** como estándar estricto para evitar zoom involuntario en navegadores móviles (iOS Safari / Android Chrome).
+- **h1 (Nombres de pantallas y encabezados mayores)**:
+  - Clase: **`text-3xl font-bold`** (`32px` / `2rem`), fuente `Poppins` (`var(--font-poppins)`).
+  - Tono cálido, optimista y contundente para titulares principales de cada ruta.
+- **h2 (Subtítulos de secciones y módulos funcionales)**:
+  - Clase: **`text-2xl font-semibold`** (`24px` / `1.5rem`), fuente `Poppins` (`var(--font-poppins)`).
+- **Body (Cuerpo de texto descriptivo de mascotas y párrafos)**:
+  - Clase: **`text-base`** (`16px` / `1rem`), fuente `Inter` (`var(--font-inter)`).
+  - Estándar estricto para lectura cómoda y para evitar zoom involuntario en navegadores móviles (iOS Safari / Android Chrome).
+- **Caption (Fechas, validaciones de formularios y letra chica)**:
+  - Clase: **`text-xs text-slate-500 dark:text-slate-400`** (`12px` / `0.75rem`).
 
 ---
 
@@ -57,33 +60,33 @@ Dado que los reportes de extravío se realizan frecuentemente en la calle con sm
 
 ## 4. Los 5 Estados Obligatorios de Componentes Interactivos
 
-Todo botón, enlace de acción, input o tarjeta clickable debe implementar obligatoriamente los **5 estados de interacción** respetando los criterios de accesibilidad visual:
+Todo botón, enlace de acción, input o tarjeta clickable debe implementar obligatoriamente los **5 estados vivos de interacción**:
 
-1. **Default**: Aspecto en reposo, con fondo semántico definido, tipografía legible y contraste WCAG AA.
-2. **Hover**: Retroalimentación visual al pasar el cursor; incremento sutil de luminosidad y sombra (`hover:bg-orange-700 hover:shadow-md`).
-3. **Active**: Microinteracción al hacer clic o presionar la pantalla; ligera reducción de escala física (`active:scale-[0.98] active:bg-orange-800`).
-4. **Focus (Teclado / A11y)**: Anillo visible de alto contraste activado mediante tecla `Tab` (`focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 dark:focus-visible:ring-orange-800`). **Prohibido eliminar el foco sin alternativa visible.**
-5. **Disabled**: Estado deshabilitado mientras se procesa un formulario o cuando faltan datos obligatorios (`disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none`).
+1. **Default**: Color base según semántica (`bg-orange-500` para primario, `bg-teal-500` para secundario) con tipografía legible y contraste WCAG AA.
+2. **Hover**: Retroalimentación visual al pasar el cursor; incremento deliberado de luminosidad y sombra (`hover:bg-orange-600 hover:shadow-lg`).
+3. **Active**: Sensación táctil de hundimiento físico inmediato (`active:scale-95`).
+4. **Focus (Teclado / A11y)**: Anillo visible de alto contraste activado mediante tecla `Tab` (`focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900`).
+5. **Disabled**: Estado inactivo cuando faltan datos obligatorios o se procesa un envío (`disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none`).
 
-### Ejemplo Canónico de Botón Primario en Tailwind:
+### Ejemplo Canónico de Botón Primario en Tailwind (`src/components/ui/Button.tsx`):
 ```tsx
 <button
   type="button"
   className="
     /* 1. DEFAULT */
-    inline-flex items-center justify-center font-semibold text-white bg-orange-600
-    rounded-xl min-h-[48px] px-6 py-3 shadow-sm transition-all duration-200
+    inline-flex items-center justify-center font-heading font-bold text-white bg-orange-500
+    rounded-2xl min-h-[48px] px-6 py-3 shadow-md shadow-orange-500/20 transition-all duration-200
     /* 2. HOVER */
-    hover:bg-orange-700 hover:shadow-md
+    hover:bg-orange-600 hover:shadow-lg
     /* 3. ACTIVE */
-    active:scale-[0.98] active:bg-orange-800
+    active:scale-95
     /* 4. FOCUS (Accesibilidad con teclado) */
-    focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 dark:focus-visible:ring-orange-800
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900
     /* 5. DISABLED */
     disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
   "
 >
-  Conocer a Manchita
+  Adoptar Mascota
 </button>
 ```
 

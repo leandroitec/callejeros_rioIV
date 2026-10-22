@@ -140,13 +140,14 @@ export function Navbar() {
               </span>
             </button>
 
-            {/* Botón Login/Registro en Desktop */}
+            {/* Botón Login/Perfil (Patrón Z: Ancla Superior Derecha en móvil y desktop) */}
             <Link
               href="/login"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-orange-600 text-white hover:bg-orange-700 transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 min-h-[44px]"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-orange-600 text-white hover:bg-orange-700 hover:shadow-md transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 min-h-[40px] sm:min-h-[44px]"
+              aria-label="Iniciar sesión o ver perfil"
             >
               <User className="w-4 h-4" />
-              <span>Ingresar</span>
+              <span className="hidden min-[380px]:inline">Ingresar</span>
             </Link>
 
             {/* Botón Menú Hamburguesa (Figma: Hamburguesa navbar NoRegis) */}

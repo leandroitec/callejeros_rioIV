@@ -88,13 +88,13 @@ export default function LoginPage() {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-4"
+        className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-6"
       >
-        {/* Email Input */}
-        <div className="space-y-1.5">
+        {/* Email Input (Gestalt: Proximidad estrecha label-input con separación amplia entre campos) */}
+        <div>
           <label
             htmlFor="login-email"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
           >
             Correo Electrónico
           </label>
@@ -132,9 +132,9 @@ export default function LoginPage() {
           )}
         </div>
 
-        {/* Password Input */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between">
+        {/* Password Input (Gestalt: Proximidad directa label-input y mb-6 hacia el botón de acción) */}
+        <div>
+          <div className="flex items-center justify-between mb-1">
             <label
               htmlFor="login-password"
               className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
@@ -195,7 +195,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full min-h-[50px] py-3.5 px-6 rounded-2xl font-heading font-extrabold text-sm uppercase tracking-wider bg-orange-600 hover:bg-orange-700 hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 text-white shadow-lg shadow-orange-600/25 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full min-h-[50px] py-3.5 px-6 rounded-2xl font-heading font-extrabold text-sm uppercase tracking-wider bg-orange-500 hover:bg-orange-600 hover:shadow-lg active:scale-95 text-white shadow-md shadow-orange-500/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {isSubmitting ? (
             <>

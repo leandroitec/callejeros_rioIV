@@ -159,5 +159,59 @@ Este documento registra cronológicamente todas las decisiones arquitectónicas,
   - Eliminación de ambigüedades cognitivas en la navegación móvil.
   - Correspondencia espacial natural y visualización transparente del contenido subido.
 
+---
 
+## [ADR-010] · [2026-10-22 20:35] Leyes de Gestalt, Jerarquía Visual y Patrones de Lectura (Clase 4)
+
+- **Estado**: Aceptado
+- **Contexto**:
+  Para transformar la experiencia de "Callejeros Río IV" en un sistema visualmente ordenado y de rápida asimilación cognitiva, se requería aplicar rigurosamente los principios de la **Clase 4: El Orden del Caos (Gestalt y Jerarquía Visual)**. Esto incluye principios de agrupamiento perceptual (Proximidad y Continuidad), jerarquía visual estricta (el Nombre como protagonista supremo), espacio negativo generoso (aire entre bloques) y patrones de escaneabilidad natural (patrón Z en portada y patrón F en guías informativas).
+- **Decisión**:
+  1. **Leyes de Gestalt (Proximidad y Continuidad)**:
+     - **Proximidad en Formularios**: En `LoginPage`, `RegisterPage` y `ReportarExtravioPage`, las etiquetas `<label>` quedan íntimamente unidas a sus respectivos campos de entrada (`mb-1`), mientras que se aplican márgenes amplios (`space-y-6`) entre bloques de campos dispares, permitiendo al cerebro procesarlos como entidades independientes.
+     - **Proximidad en Tarjetas**: En `PetCard`, el agrupamiento interno de datos (Nombre, Edad, Castración, Barrio y botón "Adoptar") se consolida mediante padding `p-4`, formando una unidad visual indivisible claramente diferenciada de las tarjetas vecinas.
+     - **Continuidad en Carrusel**: En la sección de casos prioritarios del Home, se implementó en pantallas móviles un contenedor horizontal con `overflow-x-auto snap-x snap-mandatory pr-8` y tarjetas de ancho proporcional (`w-[76vw] max-w-[285px]`). La última tarjeta visible queda intencionalmente cortada a la mitad, activando la Ley de Continuidad y sugiriendo el gesto de deslizamiento horizontal (swipe tipo streaming/Netflix).
+  2. **Jerarquía Visual (Tamaño, Contraste y Espacio Negativo)**:
+     - **Escala Tipográfica (Tamaño)**: En la ficha de detalle de la mascota (`/adopciones/[id]`), el Nombre se entroniza como el rey visual (`text-3xl sm:text-4xl font-extrabold font-heading`), mientras que los atributos técnicos secundarios (tamaño, vacunación, edad, sexo) se sitúan en escala subordinada (`text-sm text-slate-500`).
+     - **Contraste de Botones (Semejanza)**: Los botones principales de conversión adoptan un fondo naranja vibrante (`bg-orange-600 text-white`), mientras que las acciones secundarias o de descarte se estandarizan con estilo neutro/ghost (fondo sutil o transparente) para no competir visualmente ni dividir la atención.
+     - **Espacio Negativo (Aire / Breathing Room)**: Se amplió la separación estructural del Home (`space-y-16 sm:space-y-24`, rellenos de sección de `py-10` a `py-14`), otorgando respiro entre el Hero, Carruseles, Grilla y Footer para erradicar la sensación de abarrotamiento.
+  3. **Patrones de Lectura (Escaneabilidad Z y F)**:
+     - **Patrón Z en Portada**: La cabecera y el Hero guían deliberadamente la mirada del usuario en trayectoria de Z: Logo en la esquina superior izquierda ➔ Botón Login/Perfil en la esquina superior derecha ➔ Diagonal a través del titular e imágenes del Hero ➔ Cierre en los botones de acción principal ("Explorar Mascotas" y "Reportar Mascota Perdida") en la base del bloque.
+     - **Patrón F en Guías Informativas**: En `/adopcion-responsable` y la sección de misión vecinal, los requisitos se maquetaron con títulos fuertes alineados a la izquierda y viñetas que inician con palabras clave resaltadas en negrita (`<strong>`), permitiendo al usuario escanear los 4 pilares en segundos sin tropezar con bloques de texto denso.
+- **Consecuencias**:
+  - Eliminación de la sobrecarga cognitiva y mayor velocidad de asimilación de la información.
+  - Navegación móvil natural e intuitiva impulsada por la Ley de Continuidad.
+  - Jerarquía tipográfica indiscutible donde el animal rescatado es siempre el centro de atención.
+
+---
+
+## [ADR-011] · [2026-10-22 20:45] Estética Funcional: Lógica de Color, Escala Tipográfica y 5 Estados de Componentes (Clase 5)
+
+- **Estado**: Aceptado
+- **Contexto**:
+  Siguiendo las directrices de la **Clase 5: Estética Funcional (Color, Tipografía y Componentes UI)**, la plataforma "Callejeros Río IV" requería consolidar un sistema de diseño estricto y cohesivo para eliminar discrepancias visuales, garantizar predictibilidad interactiva y transmitir los valores de rescate, urgencia moderada y empatía comunitaria.
+- **Decisión**:
+  1. **Lógica de Color y Psicología Semántica**:
+     - **Primario (Naranja)**: Se estandariza `bg-orange-500` (`hover:bg-orange-600`) para las acciones principales de conversión (ej. "Adoptar a...", "Publicar Reporte de Extravío"), canalizando calidez, dinamismo y urgencia moderada de rescate.
+     - **Secundario (Cian / Verde Agua)**: Se define `bg-teal-500` (`hover:bg-teal-600`) para acciones secundarias o de colaboración económica y voluntaria (ej. planes de padrinazgo, filtros secundarios).
+     - **Semánticos (Feedback Visual Inmediato)**: Verde (`text-green-600`, `bg-green-100`, `ring-green-50`) para Modales y Toasts de éxito (`SuccessModal`), y Rojo (`text-red-600`, `bg-red-50`, `border-red-500`) para validaciones y errores de formulario (Danger).
+  2. **Escala Tipográfica Estricta y Legibilidad**:
+     - Tipografía Sans-serif dual configurada en `layout.tsx` (`Inter` para lectura y componentes de interfaz; `Poppins` para títulos e impacto visual).
+     - Jerarquía modular estandarizada en `globals.css` y páginas:
+       - **Título Principal (`h1`)**: `text-3xl font-bold font-heading` (~32px).
+       - **Subtítulos (`h2`)**: `text-2xl font-semibold font-heading` (~24px).
+       - **Cuerpo de Texto (Body)**: `text-base` (16px) con `leading-relaxed text-slate-700`.
+       - **Texto Secundario (Caption)**: `text-xs text-slate-500` (12px) para metadatos, barrios y fechas.
+  3. **Anatomía Viva de Componentes UI (5 Estados Obligatorios)**:
+     - Se creó el componente canónico `src/components/ui/Button.tsx` y se sincronizaron las clases utilitarias globales (`.btn-primary`, `.btn-secondary`, `.btn-outline` en `globals.css`):
+       1. **Default**: Fondo base semántico (`bg-orange-500 text-white`).
+       2. **Hover**: Transición suave a tono más oscuro (`hover:bg-orange-600`).
+       3. **Active**: Hundimiento táctil físico (`active:scale-95`).
+       4. **Focus**: Anillo de accesibilidad contrastante (`focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:outline-none focus-visible:ring-offset-2`).
+       5. **Disabled**: Bloqueo visual transparente (`disabled:opacity-50 disabled:cursor-not-allowed`).
+     - Soporte completo para estados de carga (`isLoading` con spinner accesible y `aria-busy="true"`), íconos contextuales (`leftIcon`, `rightIcon`) y variantes semánticas (`primary`, `secondary`, `outline`, `ghost`, `danger`).
+- **Consecuencias**:
+  - Consistencia visual absoluta en todas las vistas de la aplicación.
+  - Feedback táctil y visual inmediato en cada interacción del usuario, erradicando incertidumbres.
+  - Accesibilidad WCAG AA garantizada tanto en contraste cromático como en navegación por teclado.
 

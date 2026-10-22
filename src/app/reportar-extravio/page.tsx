@@ -173,9 +173,9 @@ export default function ReportarExtravioPage() {
         noValidate
         className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-6"
       >
-        {/* Selector de Tipo de Reporte */}
-        <div className="space-y-2">
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+        {/* Selector de Tipo de Reporte (Gestalt: Proximidad) */}
+        <div>
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
             Tipo de Situación
           </label>
           <div className="grid grid-cols-2 gap-3">
@@ -207,11 +207,11 @@ export default function ReportarExtravioPage() {
           </div>
         </div>
 
-        {/* Nombre del animal o descripción rápida */}
-        <div className="space-y-1.5">
+        {/* Nombre del animal o descripción rápida (Gestalt: Proximidad directa label-input) */}
+        <div>
           <label
             htmlFor="pet-name"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
           >
             Nombre de la Mascota / Referencia
           </label>
@@ -249,11 +249,11 @@ export default function ReportarExtravioPage() {
           )}
         </div>
 
-        {/* Barrio de Río Cuarto */}
-        <div className="space-y-1.5">
+        {/* Barrio de Río Cuarto (Gestalt: Proximidad directa label-select) */}
+        <div>
           <label
             htmlFor="neighborhood"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
           >
             Barrio / Zona de Río Cuarto
           </label>
@@ -299,11 +299,11 @@ export default function ReportarExtravioPage() {
           )}
         </div>
 
-        {/* Teléfono de Contacto */}
-        <div className="space-y-1.5">
+        {/* Teléfono de Contacto (Gestalt: Proximidad directa label-input) */}
+        <div>
           <label
             htmlFor="contact-phone"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
           >
             Teléfono de Contacto (WhatsApp)
           </label>
@@ -342,9 +342,9 @@ export default function ReportarExtravioPage() {
           )}
         </div>
 
-        {/* Carga de Imagen con Mapeo Natural 1:1 */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between">
+        {/* Carga de Imagen con Mapeo Natural 1:1 (Gestalt: Proximidad) */}
+        <div>
+          <div className="flex items-center justify-between mb-1">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               Foto del Animal (Crucial para reconocimiento)
             </label>
@@ -417,11 +417,11 @@ export default function ReportarExtravioPage() {
           )}
         </div>
 
-        {/* Descripción Breve */}
-        <div className="space-y-1.5">
+        {/* Descripción Breve (Gestalt: Proximidad directa label-textarea) */}
+        <div>
           <label
             htmlFor="description"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
           >
             Descripción y Rasgos Particulares
           </label>
@@ -461,7 +461,7 @@ export default function ReportarExtravioPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full min-h-[52px] py-3.5 px-6 rounded-2xl font-heading font-extrabold text-base bg-orange-600 hover:bg-orange-700 hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 text-white shadow-lg shadow-orange-600/25 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full min-h-[52px] py-3.5 px-6 rounded-2xl font-heading font-extrabold text-base bg-orange-500 hover:bg-orange-600 hover:shadow-lg active:scale-95 text-white shadow-md shadow-orange-500/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isSubmitting ? (
               <>

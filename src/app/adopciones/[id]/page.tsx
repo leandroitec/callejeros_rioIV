@@ -116,14 +116,36 @@ export default function PetDetailPage() {
         )}
       </div>
 
-      {/* 3. HISTORIA & DESCRIPCIÓN (Figma: ¡Hola! Soy CTHULHU...) */}
-      <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-4">
-        <h2 className="font-heading font-extrabold text-2xl text-slate-900 dark:text-white">
-          Historia de {pet.name}
-        </h2>
-        <p className="text-base text-slate-700 dark:text-slate-200 leading-relaxed font-sans">
-          {pet.description}
-        </p>
+      {/* 3. PRESENTACIÓN PRINCIPAL (Jerarquía Visual: Nombre es el Rey con text-3xl sm:text-4xl) */}
+      <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-5">
+        <div className="border-b border-slate-100 dark:border-slate-700/60 pb-4">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-300">
+              {pet.species} en Adopción
+            </span>
+            <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
+              <MapPin className="w-3.5 h-3.5 text-orange-500 shrink-0" />
+              <span>Barrio {pet.location}, Río Cuarto</span>
+            </div>
+          </div>
+          {/* El Nombre es el Rey Indiscutible */}
+          <h1 className="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 dark:text-white uppercase tracking-tight">
+            {pet.name}
+          </h1>
+          {/* Datos secundarios en texto menor (text-sm text-slate-500) */}
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+            {pet.ageApprox} • Tamaño {pet.size} • {pet.sex} • {pet.isVaccinated ? 'Vacunación al día' : 'Plan de vacunación'}
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="font-heading font-bold text-lg text-slate-900 dark:text-white">
+            Historia de {pet.name}
+          </h2>
+          <p className="text-base text-slate-700 dark:text-slate-200 leading-relaxed font-sans">
+            {pet.description}
+          </p>
+        </div>
 
         {/* 4. SISTEMA DE BADGES (Figma: Sistema de Badges) */}
         <div className="pt-2">

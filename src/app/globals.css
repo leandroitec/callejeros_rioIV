@@ -28,31 +28,54 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+/* Escala Tipográfica Estricta (Clase 5: Estética Funcional) */
+h1 {
+  font-family: var(--font-poppins), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  @apply text-3xl font-bold tracking-tight;
+}
+
+h2 {
+  font-family: var(--font-poppins), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  @apply text-2xl font-semibold tracking-tight;
+}
+
+h3, h4, h5, h6 {
   font-family: var(--font-poppins), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* 5 Estados Interactivos Accesibles Base con Affordance Física */
+p, .body-text {
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  @apply text-base leading-relaxed;
+}
+
+.caption-text {
+  @apply text-xs text-slate-500 dark:text-slate-400;
+}
+
+/* 5 Estados Interactivos Vivos Obligatorios (Clase 5: Estética Funcional) */
+/* 1. Primario (Naranja): bg-orange-500, hover:bg-orange-600, active:scale-95, focus:ring-orange-400, disabled:opacity-50 */
 .btn-primary {
-  @apply inline-flex items-center justify-center font-bold text-white bg-orange-600 rounded-2xl min-h-[48px] px-6 py-3 shadow-md shadow-orange-600/25 transition-all duration-200
-  hover:bg-orange-700 hover:shadow-xl hover:-translate-y-0.5
-  active:scale-[0.98] active:translate-y-0 active:bg-orange-800
-  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900
+  @apply inline-flex items-center justify-center font-heading font-bold text-white bg-orange-500 rounded-2xl min-h-[48px] px-6 py-3 shadow-md shadow-orange-500/20 transition-all duration-200
+  hover:bg-orange-600 hover:shadow-lg hover:-translate-y-0.5
+  active:scale-95 active:translate-y-0 active:bg-orange-700
+  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900
   disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
 }
 
+/* 2. Secundario (Verde Agua / Teal): bg-teal-500, hover:bg-teal-600, active:scale-95, focus:ring-teal-400, disabled:opacity-50 */
 .btn-secondary {
-  @apply inline-flex items-center justify-center font-bold text-white bg-cyan-700 rounded-2xl min-h-[48px] px-6 py-3 shadow-md shadow-cyan-700/25 transition-all duration-200
-  hover:bg-cyan-800 hover:shadow-xl hover:-translate-y-0.5
-  active:scale-[0.98] active:translate-y-0 active:bg-cyan-900
-  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-600 dark:focus-visible:ring-offset-slate-900
+  @apply inline-flex items-center justify-center font-heading font-bold text-white bg-teal-500 rounded-2xl min-h-[48px] px-6 py-3 shadow-md shadow-teal-500/20 transition-all duration-200
+  hover:bg-teal-600 hover:shadow-lg hover:-translate-y-0.5
+  active:scale-95 active:translate-y-0 active:bg-teal-700
+  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-teal-400 dark:focus-visible:ring-offset-slate-900
   disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
 }
 
+/* 3. Contorno (Outline): Neutro y discreto para evitar competencia visual */
 .btn-outline {
-  @apply inline-flex items-center justify-center font-semibold text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 rounded-2xl min-h-[48px] px-6 py-3 shadow-sm transition-all duration-200
+  @apply inline-flex items-center justify-center font-heading font-semibold text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 rounded-2xl min-h-[48px] px-6 py-3 shadow-sm transition-all duration-200
   hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-400 hover:shadow-md hover:-translate-y-0.5
-  active:scale-[0.98] active:translate-y-0 active:bg-slate-100 dark:active:bg-slate-600
-  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900
+  active:scale-95 active:translate-y-0 active:bg-slate-100 dark:active:bg-slate-600
+  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900
   disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
 }

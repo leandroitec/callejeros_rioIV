@@ -90,7 +90,7 @@ export default function AdopcionesPage() {
 
       {/* 1. SELECTOR ¿Qué preferís adoptar? (Figma Wireframe 2: Adopciones) */}
       <section className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm text-center max-w-2xl mx-auto space-y-4">
-        <h1 className="font-heading font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">
+        <h1 className="font-heading font-bold text-3xl text-slate-900 dark:text-white">
           ¿Qué preferís adoptar?
         </h1>
 
@@ -144,10 +144,10 @@ export default function AdopcionesPage() {
       {/* 2. TÍTULO DE SECCIÓN Y CONTADOR */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-200 dark:border-slate-800 pb-4">
         <div>
-          <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white">
+          <h2 className="font-heading font-semibold text-2xl text-slate-900 dark:text-white">
             Encontrá a tu próximo compañero de vida
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Mostrando {filteredPets.length} mascotas disponibles en Río Cuarto
           </p>
         </div>

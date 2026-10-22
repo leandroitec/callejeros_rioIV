@@ -44,20 +44,20 @@ export default function PadrinosPage() {
           <ChevronLeft className="w-6 h-6" />
         </Link>
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">
             Solidaridad Comunitaria
           </span>
-          <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white">
+          <h1 className="font-heading font-bold text-3xl text-slate-900 dark:text-white">
             Padrinos y Madrinas
           </h1>
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-cyan-600 to-teal-700 rounded-3xl p-6 sm:p-10 text-white shadow-xl space-y-3">
-        <h2 className="font-heading font-extrabold text-2xl sm:text-3xl">
+      <div className="bg-gradient-to-r from-teal-600 to-cyan-700 rounded-3xl p-6 sm:p-10 text-white shadow-xl space-y-3">
+        <h2 className="font-heading font-semibold text-2xl">
           ¿No podés adoptar físicamente en tu hogar?
         </h2>
-        <p className="text-sm sm:text-base text-cyan-50 leading-relaxed max-w-2xl">
+        <p className="text-base text-cyan-50 leading-relaxed max-w-2xl">
           Convertite en el ángel guardián de una mascota en tratamiento en Río Cuarto. Tu padrinazgo mensual asegura que ningún animal quede sin asistencia veterinaria ni comida.
         </p>
       </div>
@@ -97,10 +97,8 @@ export default function PadrinosPage() {
                   setSelectedPlan(plan.id);
                   setIsSuccessModalOpen(true);
                 }}
-                className={`w-full min-h-[48px] py-3 px-4 rounded-2xl font-heading font-bold text-sm shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 active:scale-95 ${
-                  plan.popular
-                    ? 'btn-primary'
-                    : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-orange-600 dark:hover:bg-orange-400 dark:hover:text-white'
+                className={`w-full min-h-[48px] py-3 px-4 rounded-2xl font-heading font-bold text-sm shadow-sm transition-all ${
+                  plan.popular ? 'btn-primary' : 'btn-secondary'
                 }`}
               >
                 Sumarme como Padrino

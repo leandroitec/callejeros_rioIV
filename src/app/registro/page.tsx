@@ -108,13 +108,13 @@ export default function RegisterPage() {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-4"
+        className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-6"
       >
-        {/* Full Name Input (Figma: User Icon) */}
-        <div className="space-y-1.5">
+        {/* Full Name Input (Figma: User Icon - Gestalt: Proximidad directa label-input) */}
+        <div>
           <label
             htmlFor="register-name"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
           >
             Nombre Completo
           </label>
@@ -152,11 +152,11 @@ export default function RegisterPage() {
           )}
         </div>
 
-        {/* Email Input (Figma: Mail Icon) */}
-        <div className="space-y-1.5">
+        {/* Email Input (Figma: Mail Icon - Gestalt: Proximidad directa label-input) */}
+        <div>
           <label
             htmlFor="register-email"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
           >
             Correo Electrónico
           </label>
@@ -194,11 +194,11 @@ export default function RegisterPage() {
           )}
         </div>
 
-        {/* Password Input (Figma: Lock Icon + Eye) */}
-        <div className="space-y-1.5">
+        {/* Password Input (Figma: Lock Icon + Eye - Gestalt: Proximidad directa label-input) */}
+        <div>
           <label
             htmlFor="register-password"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
           >
             Contraseña
           </label>
@@ -245,8 +245,8 @@ export default function RegisterPage() {
         </div>
 
         {/* Inputs de Código OTP (Verificación de Seguridad Comunitaria) */}
-        <div className="space-y-1.5 pt-1">
-          <div className="flex items-center justify-between">
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1">
               <KeyRound className="w-3.5 h-3.5 text-orange-500" />
               <span>Código OTP de Verificación</span>
@@ -274,7 +274,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full min-h-[50px] py-3.5 px-6 rounded-2xl font-heading font-extrabold text-sm uppercase tracking-wider bg-orange-600 hover:bg-orange-700 hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 text-white shadow-lg shadow-orange-600/25 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+          className="w-full min-h-[50px] py-3.5 px-6 rounded-2xl font-heading font-extrabold text-sm uppercase tracking-wider bg-orange-500 hover:bg-orange-600 hover:shadow-lg active:scale-95 text-white shadow-md shadow-orange-500/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
         >
           {isSubmitting ? (
             <>

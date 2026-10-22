@@ -91,7 +91,7 @@ export function SuccessModal({
         className={`relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 text-center shadow-2xl border-2 transition-all animate-in zoom-in-95 duration-200 ${
           isOrange
             ? 'border-orange-500 dark:border-orange-600'
-            : 'border-emerald-500 dark:border-emerald-600'
+            : 'border-green-500 dark:border-green-600'
         }`}
       >
         <button
@@ -103,12 +103,12 @@ export function SuccessModal({
           <X className="w-5 h-5" />
         </button>
 
-        {/* Icono de Confirmación y Confianza Emocional */}
+        {/* Icono de Confirmación y Confianza Emocional (Color Semántico Verde Éxito: bg-green-100 text-green-600) */}
         <div
           className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ring-8 ${
             isOrange
               ? 'bg-orange-100 dark:bg-orange-950/60 text-orange-600 dark:text-orange-400 ring-orange-50 dark:ring-orange-950/30'
-              : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 ring-emerald-50 dark:ring-emerald-950/30'
+              : 'bg-green-100 dark:bg-green-950/60 text-green-600 dark:text-green-400 ring-green-50 dark:ring-green-950/30'
           }`}
         >
           <CheckCircle2 className="w-9 h-9" />
@@ -129,8 +129,8 @@ export function SuccessModal({
             onClick={onClose}
             className={`w-full inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3.5 rounded-2xl font-heading font-bold text-sm text-white shadow-md active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
               isOrange
-                ? 'bg-orange-600 hover:bg-orange-700 shadow-orange-600/25 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900'
-                : 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/25 focus-visible:ring-emerald-600 dark:focus-visible:ring-offset-slate-900'
+                ? 'bg-orange-500 hover:bg-orange-600 shadow-orange-500/25 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900'
+                : 'bg-green-600 hover:bg-green-700 shadow-green-600/25 focus-visible:ring-green-500 dark:focus-visible:ring-offset-slate-900'
             }`}
           >
             <HeartHandshake className="w-4 h-4" />
