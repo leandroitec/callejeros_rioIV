@@ -12,11 +12,16 @@ import {
   Moon,
   PawPrint,
   HeartHandshake,
+  AlertTriangle,
   Info,
   CreditCard,
   User,
   Newspaper,
   ChevronRight,
+  Users,
+  ShieldCheck,
+  Heart,
+  ShoppingBag,
 } from 'lucide-react';
 
 export function Navbar() {
@@ -49,7 +54,7 @@ export function Navbar() {
           {/* Logo Brand */}
           <Link
             href="/"
-            className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 rounded-lg group"
+            className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 rounded-lg group"
             aria-label="Ir a la página principal de Callejeros Río IV"
           >
             <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-orange-500 shadow-sm">
@@ -75,31 +80,31 @@ export function Navbar() {
           <nav className="hidden md:flex items-center gap-6" aria-label="Navegación principal">
             <Link
               href="/"
-              className="text-slate-800 dark:text-white font-bold hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-md py-1 px-2"
+              className="text-slate-800 dark:text-white font-bold hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 rounded-md py-1 px-2"
             >
               Inicio
             </Link>
             <Link
               href="/adopciones"
-              className="text-slate-700 dark:text-slate-200 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-md py-1 px-2"
+              className="text-slate-700 dark:text-slate-200 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 rounded-md py-1 px-2"
             >
               Mascotas en Adopción
             </Link>
             <Link
               href="/reportar-extravio"
-              className="text-slate-700 dark:text-slate-200 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-md py-1 px-2"
+              className="text-slate-700 dark:text-slate-200 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 rounded-md py-1 px-2"
             >
               Reportar Extravío
             </Link>
             <Link
               href="/padrinos"
-              className="text-slate-700 dark:text-slate-200 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-md py-1 px-2"
+              className="text-slate-700 dark:text-slate-200 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 rounded-md py-1 px-2"
             >
               Padrinos y Madrinas
             </Link>
             <Link
               href="/tienda"
-              className="text-slate-700 dark:text-slate-200 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-md py-1 px-2"
+              className="text-slate-700 dark:text-slate-200 font-medium hover:text-orange-600 dark:hover:text-orange-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 rounded-md py-1 px-2"
             >
               Tienda Solidaria
             </Link>
@@ -111,29 +116,34 @@ export function Navbar() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
             >
               {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
             </button>
 
-            {/* Campana de Notificaciones (con badge activo como en Figma) */}
+            {/* Campana de Notificaciones (Modelo Mental: Ícono Universal + Etiqueta Explícita) */}
             <button
               type="button"
               onClick={() => setHasNotifications(!hasNotifications)}
-              className="relative p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
-              aria-label="Ver alertas y notificaciones recientes"
+              className="relative p-2 sm:px-3 sm:py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center gap-1.5"
+              aria-label="Ver alertas y notificaciones recientes de Río Cuarto"
             >
-              <Bell className="w-5 h-5 text-slate-700 dark:text-slate-300" />
-              {hasNotifications && (
-                <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-orange-600 rounded-full ring-2 ring-white dark:ring-slate-900 animate-pulse" />
-              )}
+              <div className="relative">
+                <Bell className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                {hasNotifications && (
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-orange-600 rounded-full ring-2 ring-white dark:ring-slate-900 animate-pulse" />
+                )}
+              </div>
+              <span className="hidden lg:inline text-xs font-bold text-slate-700 dark:text-slate-300">
+                Alertas
+              </span>
             </button>
 
             {/* Botón Login/Registro en Desktop */}
             <Link
               href="/login"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-orange-600 dark:hover:bg-orange-400 dark:hover:text-white transition-all shadow-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 min-h-[44px]"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-orange-600 text-white hover:bg-orange-700 transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 min-h-[44px]"
             >
               <User className="w-4 h-4" />
               <span>Ingresar</span>
@@ -143,7 +153,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setIsDrawerOpen(true)}
-              className="p-2.5 rounded-xl text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 transition-all min-w-[48px] min-h-[48px] flex items-center justify-center"
+              className="p-2.5 rounded-xl text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 transition-all min-w-[48px] min-h-[48px] flex items-center justify-center"
               aria-expanded={isDrawerOpen}
               aria-controls="mobile-drawer"
               aria-label="Abrir menú de navegación"
@@ -179,19 +189,19 @@ export function Navbar() {
           {/* Header del Drawer */}
           <div className="p-4 border-b border-neutral-200 dark:border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700">
+              <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-950/60 flex items-center justify-center text-orange-600 dark:text-orange-400 border border-orange-200 dark:border-orange-800">
                 <User className="w-5 h-5" />
               </div>
               <div className="flex flex-col">
                 <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
-                  No Registrado...
+                  Mi Perfil (Invitado)
                 </span>
                 <Link
                   href="/login"
                   onClick={() => setIsDrawerOpen(false)}
                   className="text-xs text-orange-600 dark:text-orange-400 hover:underline font-medium"
                 >
-                  Iniciar sesión
+                  Iniciar sesión o registrarse
                 </Link>
               </div>
             </div>
@@ -199,8 +209,8 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setIsDrawerOpen(false)}
-              className="p-2 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 min-w-[48px] min-h-[48px] flex items-center justify-center"
-              aria-label="Cerrar menú"
+              className="p-2 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 min-w-[48px] min-h-[48px] flex items-center justify-center"
+              aria-label="Cerrar menú de navegación"
             >
               <X className="w-6 h-6" />
             </button>
@@ -223,7 +233,7 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Grupo 1: Adopta un Callejero */}
+            {/* Grupo 1: Adopta un Callejero (Modelos Mentales: Ícono + Etiqueta Explícita) */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2">
                 <PawPrint className="w-4 h-4 text-orange-500" />
@@ -235,7 +245,10 @@ export function Navbar() {
                   onClick={() => setIsDrawerOpen(false)}
                   className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-orange-600 transition-all min-h-[44px]"
                 >
-                  <span>Adoptar</span>
+                  <div className="flex items-center gap-2.5">
+                    <PawPrint className="w-4 h-4 text-orange-500 shrink-0" />
+                    <span>Adoptar Mascota</span>
+                  </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
@@ -243,7 +256,10 @@ export function Navbar() {
                   onClick={() => setIsDrawerOpen(false)}
                   className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-orange-600 transition-all min-h-[44px]"
                 >
-                  <span>Publicar en Adopción</span>
+                  <div className="flex items-center gap-2.5">
+                    <HeartHandshake className="w-4 h-4 text-orange-500 shrink-0" />
+                    <span>Publicar en Adopción</span>
+                  </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
@@ -251,7 +267,10 @@ export function Navbar() {
                   onClick={() => setIsDrawerOpen(false)}
                   className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-red-500 transition-all min-h-[44px]"
                 >
-                  <span className="text-red-600 dark:text-red-400 font-semibold">Reportar Extravío</span>
+                  <div className="flex items-center gap-2.5">
+                    <AlertTriangle className="w-4 h-4 text-red-500 shrink-0" />
+                    <span className="text-red-600 dark:text-red-400 font-semibold">Reportar Extravío</span>
+                  </div>
                   <ChevronRight className="w-4 h-4 text-red-400" />
                 </Link>
               </div>
@@ -269,7 +288,10 @@ export function Navbar() {
                   onClick={() => setIsDrawerOpen(false)}
                   className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-cyan-600 transition-all min-h-[44px]"
                 >
-                  <span>Eventos Benéficos y Noticias</span>
+                  <div className="flex items-center gap-2.5">
+                    <Newspaper className="w-4 h-4 text-cyan-500 shrink-0" />
+                    <span>Eventos Benéficos y Noticias</span>
+                  </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
               </div>
@@ -287,7 +309,10 @@ export function Navbar() {
                   onClick={() => setIsDrawerOpen(false)}
                   className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-orange-600 transition-all min-h-[44px]"
                 >
-                  <span>Quiénes Somos</span>
+                  <div className="flex items-center gap-2.5">
+                    <Users className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span>Quiénes Somos</span>
+                  </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
@@ -295,13 +320,16 @@ export function Navbar() {
                   onClick={() => setIsDrawerOpen(false)}
                   className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-orange-600 transition-all min-h-[44px]"
                 >
-                  <span>Adopción Responsable</span>
+                  <div className="flex items-center gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span>Guía de Adopción Responsable</span>
+                  </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
               </div>
             </div>
 
-            {/* Grupo 4: Quiero Colaborar */}
+            {/* Grupo 4: Quiero Colaborar (Modelos Mentales: Ícono + Etiqueta Explícita) */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2">
                 <CreditCard className="w-4 h-4 text-emerald-500" />
@@ -313,7 +341,10 @@ export function Navbar() {
                   onClick={() => setIsDrawerOpen(false)}
                   className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-emerald-600 transition-all min-h-[44px]"
                 >
-                  <span>Donaciones</span>
+                  <div className="flex items-center gap-2.5">
+                    <CreditCard className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Donaciones Económicas</span>
+                  </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
@@ -321,7 +352,10 @@ export function Navbar() {
                   onClick={() => setIsDrawerOpen(false)}
                   className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-emerald-600 transition-all min-h-[44px]"
                 >
-                  <span>Colaboraciones y Apadrinamientos</span>
+                  <div className="flex items-center gap-2.5">
+                    <Heart className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Apadrinar Tratamiento</span>
+                  </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
@@ -329,7 +363,10 @@ export function Navbar() {
                   onClick={() => setIsDrawerOpen(false)}
                   className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-emerald-600 transition-all min-h-[44px]"
                 >
-                  <span>Tienda Solidaria</span>
+                  <div className="flex items-center gap-2.5">
+                    <ShoppingBag className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Tienda Solidaria</span>
+                  </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
               </div>

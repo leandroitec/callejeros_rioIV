@@ -31,7 +31,7 @@ export function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-orange-600 text-slate-300 hover:text-white flex items-center justify-center transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-400"
+                className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-orange-600 text-slate-300 hover:text-white flex items-center justify-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-500 dark:focus-visible:ring-offset-slate-900"
                 aria-label="Instagram de Callejeros Río IV"
               >
                 <Instagram className="w-5 h-5" />
@@ -40,7 +40,7 @@ export function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-cyan-600 text-slate-300 hover:text-white flex items-center justify-center transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400"
+                className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-cyan-600 text-slate-300 hover:text-white flex items-center justify-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-500 dark:focus-visible:ring-offset-slate-900"
                 aria-label="Facebook de Callejeros Río IV"
               >
                 <Facebook className="w-5 h-5" />

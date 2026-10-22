@@ -59,6 +59,7 @@ export default function HomePage() {
             alt={carouselItems[activeSlide].title}
             fill
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
             className="object-cover transition-all duration-700 brightness-[0.78]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent flex flex-col justify-end p-6 sm:p-10 text-white">
@@ -116,14 +117,14 @@ export default function HomePage() {
             <div className="pt-2 flex flex-wrap gap-4">
               <Link
                 href="/adopciones"
-                className="inline-flex items-center justify-center font-heading font-bold text-sm bg-white text-orange-700 hover:bg-neutral-100 active:scale-95 px-6 py-3.5 rounded-2xl shadow-md transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white"
+                className="inline-flex items-center justify-center font-heading font-bold text-sm bg-white text-orange-700 hover:bg-neutral-100 active:scale-95 px-6 py-3.5 rounded-2xl shadow-md transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white focus-visible:ring-offset-orange-600"
               >
                 <span>Explorar Mascotas</span>
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Link>
               <Link
                 href="/reportar-extravio"
-                className="inline-flex items-center justify-center font-heading font-bold text-sm bg-black/25 hover:bg-black/35 active:scale-95 text-white border-2 border-white/60 px-6 py-3.5 rounded-2xl transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white"
+                className="inline-flex items-center justify-center font-heading font-bold text-sm bg-black/25 hover:bg-black/35 active:scale-95 text-white border-2 border-white/60 px-6 py-3.5 rounded-2xl transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white focus-visible:ring-offset-orange-600"
               >
                 <AlertTriangle className="w-4 h-4 mr-2 text-amber-300" />
                 <span>Reportar Mascota Perdida</span>
@@ -245,7 +246,7 @@ export default function HomePage() {
       <a
         href="#donaciones"
         aria-label="Ir a la sección de Donaciones"
-        className="fixed bottom-6 right-6 z-30 flex items-center gap-2.5 px-4 py-3 rounded-full bg-orange-600 hover:bg-orange-700 active:scale-95 text-white shadow-xl hover:shadow-2xl transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 border-2 border-white/80 dark:border-slate-800 group"
+        className="fixed bottom-6 right-6 z-30 flex items-center gap-2.5 px-4 py-3 rounded-full bg-orange-600 hover:bg-orange-700 active:scale-95 text-white shadow-xl hover:shadow-2xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 border-2 border-white/80 dark:border-slate-800 group"
       >
         <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
           <Heart className="w-4 h-4 text-white fill-white group-hover:scale-110 transition-transform" />

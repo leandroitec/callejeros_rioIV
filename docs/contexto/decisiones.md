@@ -87,3 +87,77 @@ Este documento registra cronológicamente todas las decisiones arquitectónicas,
   - Experiencia de navegación consistente y mobile-first sin ambigüedades de punto de entrada.
   - Coherencia total con los wireframes de Figma y el mapa mental de navegación.
 
+---
+
+## [ADR-007] · [2026-10-22 19:45] Optimización UX/UI Basada en "El Mindset del Desarrollador UX"
+
+- **Estado**: Aceptado
+- **Contexto**:
+  Para eliminar fricciones cognitivas, reducir la incertidumbre post-envío de formularios y potenciar la empatía visual del proyecto con adoptantes y rescatistas, se auditaron y rediseñaron los puntos de interacción clave.
+- **Decisión**:
+  1. **Optimización de Formularios (Login, Registro, Reporte)**:
+     - Todos los inputs cuentan con padding táctil de al menos 48px (`min-h-[48px]`), etiquetas explícitas y atributos de autocompletado nativo.
+     - Botones principales de envío con color primario naranja vibrante (`bg-orange-600`), feedback inmediato de carga (spinner animado) y modales de confirmación interactivos (`SuccessModal`) para erradicar la incertidumbre del usuario.
+  2. **Detector de Frustraciones**:
+     - Separación espacial mínima (`gap-4` a `gap-6`) entre acciones opuestas (ej. "Ver Resultados" vs. "Limpiar Filtros" en `FilterModal`, o "Publicar" vs. "Cancelar y volver" en `ReportarExtravioPage`).
+     - Jerarquía visual estricta: los botones secundarios o de descarte adoptan estilo "ghost" neutro para evitar toques destructivos accidentales.
+  3. **Confianza y Emoción**:
+     - Estandarización de bordes redondeados orgánicos (`rounded-2xl` y `rounded-3xl`) en tarjetas (`PetCard`), modales y botones, transmitiendo cercanía y calidez para una comunidad de rescate animal.
+  4. **Desempeño Web**:
+     - Integración sistemática del componente nativo `<Image />` de Next.js con atributo `priority` en el Hero Carousel y tamaños responsivos optimizados (`sizes`) para maximizar el LCP (Largest Contentful Paint).
+- **Consecuencias**:
+  - Mayor tasa de conversión en reportes de extravío y adopciones.
+  - Reducción drástica de frustraciones y errores de usuario en interfaces móviles.
+
+---
+
+## [ADR-008] · [2026-10-22 20:00] Cumplimiento de Usabilidad y Accesibilidad Web (WCAG AA)
+
+- **Estado**: Aceptado
+- **Contexto**:
+  La plataforma "Callejeros Río IV" debe ser operable por todas las personas, independientemente de sus capacidades físicas, visuales o cognitivas, y en cualquier condición de iluminación. Además, se requiere agilizar el uso en móviles de adoptantes y rescatistas que interactúan en la vía pública mediante teclado físico, lectores de pantalla o navegación táctil.
+- **Decisión**:
+  1. **Accesibilidad Operable (Navegación por Teclado)**:
+     - Estandarización del estado `:focus-visible` con anillos de alto contraste (`focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900`) en todos los elementos interactivos (botones, enlaces, selectores y campos de entrada).
+     - Trampa de foco nativa (`focus trap`) en modales superpuestos (`SuccessModal`, `FilterModal`), asegurando que la tecla `Tab` / `Shift+Tab` no escape del modal mientras esté activo.
+     - Cierre inmediato de ventanas modales y menú drawer móvil mediante la tecla `Escape`.
+  2. **Accesibilidad Perceptible (Contraste y Etiquetas ARIA)**:
+     - Auditoría y cumplimiento del ratio de contraste mínimo de **4.5:1** (WCAG AA) para texto estándar en fondos claros y oscuros.
+     - Asignación obligatoria de `aria-label` descriptivos en todos los controles basados exclusivamente en íconos (menú hamburguesa, selector de tema claro/oscuro, campana de notificaciones, botón cerrar 'X', flechas de retorno y botones de favoritos).
+  3. **Relación Esfuerzo-Beneficio (Formularios y Validaciones)**:
+     - Validaciones en tiempo real disparadas al desenfocar (`onBlur`) y al escribir (`onChange`) en `LoginPage`, `RegisterPage` y `ReportarExtravioPage`.
+     - Mensajes de error legibles en rojo (`text-red-600 dark:text-red-400`) ubicados inmediatamente debajo del campo con atributos de accesibilidad `role="alert"`, `aria-invalid` y `aria-describedby`.
+     - Atributos nativos de HTML5 `autoComplete` (`email`, `name`, `tel`, `current-password`, `new-password`) para facilitar el llenado predictivo y reducir la sobrecarga cognitiva.
+  4. **Robustez y Semántica Estructural**:
+     - Estructura semántica formal con etiquetas HTML (`<header>`, `<main>`, `<nav>`, `<aside>`, `<section>`, `<article>`) garantizando un árbol de accesibilidad claro para lectores de pantalla.
+     - Atributos dinámicos `aria-expanded`, `aria-controls` y `role="region"` en acordeones y controles colapsables.
+- **Consecuencias**:
+  - Cumplimiento pleno con las pautas WCAG 2.1 nivel AA.
+  - Experiencia accesible tanto para navegación por teclado como para tecnologías asistivas (screen readers).
+  - Reducción sustancial del tiempo de carga de datos en formularios y prevención de envíos erróneos.
+
+---
+
+## [ADR-009] · [2026-10-22 20:15] Implementación de Modelos Mentales, Affordance Visual y Mapeo Natural (Clase 3)
+
+- **Estado**: Aceptado
+- **Contexto**:
+  Para consolidar una experiencia intuitiva y reducir la fricción cognitiva en "Callejeros Río IV", es necesario alinear la interfaz con los modelos mentales preexistentes de los usuarios (adoptantes, rescatistas y vecinos), proporcionando pistas visuales físicas (affordances) que indiquen qué elementos son interactivos y asegurando una correspondencia espacial directa (mapeo natural) entre los controles y sus efectos en la pantalla.
+- **Decisión**:
+  1. **Affordance Visual (Interactividad Evidente)**:
+     - Incorporación de elevación y profundidad física en botones de acción principal y tarjetas (`PetCard`, tarjetas de productos en la tienda y botones de envío) utilizando sombras profundas y micro-interacciones de traslación vertical en Tailwind (`shadow-md`, `hover:shadow-xl`, `hover:-translate-y-1` o `hover:-translate-y-0.5`, `active:translate-y-0`, `active:scale-[0.98]`).
+     - Estandarización de clases globales `.btn-primary`, `.btn-secondary` y `.btn-outline` en `globals.css` para garantizar consistencia táctil en toda la plataforma.
+  2. **Modelos Mentales (Iconografía Universal y Etiquetada)**:
+     - Erradicación de íconos aislados y ambiguos. Cada acción de navegación o estado está acompañada de texto explícito y legible.
+     - En el menú lateral (Drawer) y Navbar: la campana de notificaciones se rotula explícitamente como "Alertas", el estado de autenticación se presenta como "Mi Perfil (Invitado)" o nombre del usuario autenticado, y cada enlace cuenta con su ícono representativo universal y etiqueta semántica directa (Adopciones, Publicar Mascota, Reportar Extravío, Eventos, Quiénes Somos, Donaciones, Padrinos y Tienda Solidaria).
+     - En la tienda solidaria (`/tienda`), el indicador de carrito se rotula de forma unívoca ("Carrito: X artículos") junto al ícono de bolsa de compras.
+  3. **Mapeo Natural (Filtros y Previsualizaciones Directas)**:
+     - En `ToggleSwitch` (modal de filtros), distribución espacial `justify-between w-full` con el interruptor fijado al extremo derecho de la etiqueta que controla, reforzando la relación de causa y efecto.
+     - En el formulario de reporte de extravío (`/reportar-extravio`), reemplazo espacial 1:1 del recuadro de subida de fotos (`h-64 sm:h-72 rounded-3xl`) por la previsualización a pantalla completa de la imagen real cargada, acompañada de controles sobreimpresos accesibles ("Cambiar Foto" y "Quitar"), evitando saltos de maquetación (CLS) y confirmando inmediatamente al rescatista la foto que la comunidad visualizará.
+- **Consecuencias**:
+  - Los usuarios comprenden al instante la interactividad sin recurrir a instrucciones de uso.
+  - Eliminación de ambigüedades cognitivas en la navegación móvil.
+  - Correspondencia espacial natural y visualización transparente del contenido subido.
+
+
+

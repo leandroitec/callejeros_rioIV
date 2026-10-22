@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, ChevronDown, ChevronRight, SlidersHorizontal } from 'lucide-react';
 import { ToggleSwitch } from '@/components/ui/ToggleSwitch';
 
@@ -32,6 +32,56 @@ export function FilterModal({
 }: FilterModalProps) {
   const [localFilters, setLocalFilters] = useState<FilterState>(initialFilters);
   const [expandedSection, setExpandedSection] = useState<'edad' | 'sociabilidad' | 'castracion' | 'sexo' | null>('edad');
+  const modalRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Escuchar tecla Escape para cerrar accesiblemente
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+
+      // Focus trap accesible para navegación por teclado (Tab / Shift+Tab)
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusableElements = modalRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Auto-focus en el campo de búsqueda al abrir
+    const timer = setTimeout(() => {
+      searchInputRef.current?.focus();
+    }, 60);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      clearTimeout(timer);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -66,7 +116,10 @@ export function FilterModal({
       aria-modal="true"
       aria-labelledby="filter-title"
     >
-      <div className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden border border-neutral-200 dark:border-slate-800 animate-in fade-in slide-in-from-bottom duration-300">
+      <div
+        ref={modalRef}
+        className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden border border-neutral-200 dark:border-slate-800 animate-in fade-in slide-in-from-bottom duration-300"
+      >
         {/* Header Modal con Buscador */}
         <div className="p-4 border-b border-neutral-200 dark:border-slate-800 space-y-3 bg-slate-50/50 dark:bg-slate-900/50">
           <div className="flex items-center justify-between">
@@ -79,8 +132,8 @@ export function FilterModal({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 min-w-[44px] min-h-[44px] flex items-center justify-center"
-              aria-label="Cerrar filtros"
+              className="p-2 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label="Cerrar modal de filtros"
             >
               <X className="w-6 h-6" />
             </button>
@@ -90,11 +143,13 @@ export function FilterModal({
           <div className="relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
+              ref={searchInputRef}
               type="text"
               value={localFilters.search}
               onChange={(e) => setLocalFilters({ ...localFilters, search: e.target.value })}
               placeholder="Buscar por nombre, barrio, etc..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all min-h-[44px]"
+              aria-label="Buscar mascotas por nombre o barrio"
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 transition-all min-h-[44px]"
             />
           </div>
         </div>
@@ -106,7 +161,8 @@ export function FilterModal({
             <button
               type="button"
               onClick={() => toggleSection('edad')}
-              className="w-full flex items-center justify-between p-3.5 bg-slate-100/70 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 min-h-[44px]"
+              aria-expanded={expandedSection === 'edad'}
+              className="w-full flex items-center justify-between p-3.5 bg-slate-100/70 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 min-h-[44px]"
             >
               <span>Edad</span>
               {expandedSection === 'edad' ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -137,7 +193,8 @@ export function FilterModal({
             <button
               type="button"
               onClick={() => toggleSection('sociabilidad')}
-              className="w-full flex items-center justify-between p-3.5 bg-slate-100/70 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 min-h-[44px]"
+              aria-expanded={expandedSection === 'sociabilidad'}
+              className="w-full flex items-center justify-between p-3.5 bg-slate-100/70 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 min-h-[44px]"
             >
               <span>Sociabilidad</span>
               {expandedSection === 'sociabilidad' ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -158,7 +215,8 @@ export function FilterModal({
             <button
               type="button"
               onClick={() => toggleSection('castracion')}
-              className="w-full flex items-center justify-between p-3.5 bg-slate-100/70 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 min-h-[44px]"
+              aria-expanded={expandedSection === 'castracion'}
+              className="w-full flex items-center justify-between p-3.5 bg-slate-100/70 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200 font-semibold text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 min-h-[44px]"
             >
               <span>Castración</span>
               {expandedSection === 'castracion' ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -184,19 +242,19 @@ export function FilterModal({
           </div>
         </div>
 
-        {/* Footer Modal con Botones Primarios y Limpiar (Figma) */}
-        <div className="p-4 border-t border-neutral-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 flex items-center gap-4">
+        {/* Footer Modal con Botones: Detector de Frustraciones (Jerarquía y Separación Clara) */}
+        <div className="p-4 sm:p-5 border-t border-neutral-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 flex items-center justify-between gap-4 sm:gap-6">
           <button
             type="button"
             onClick={handleApply}
-            className="flex-1 min-h-[48px] px-6 py-3 rounded-2xl font-heading font-extrabold text-sm uppercase tracking-wide bg-slate-900 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white shadow-md active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300"
+            className="flex-1 min-h-[50px] px-6 py-3.5 rounded-2xl font-heading font-extrabold text-sm uppercase tracking-wider bg-orange-600 hover:bg-orange-700 hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 text-white shadow-lg shadow-orange-600/25 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 flex items-center justify-center gap-2"
           >
-            VER RESULTADOS
+            <span>Ver Resultados</span>
           </button>
           <button
             type="button"
             onClick={handleReset}
-            className="text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-red-500 underline underline-offset-4 py-2 px-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 min-h-[44px] flex items-center"
+            className="min-h-[44px] px-3.5 py-2.5 rounded-xl font-heading font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-400 dark:focus-visible:ring-offset-slate-900 flex items-center justify-center shrink-0"
           >
             Limpiar Filtros
           </button>

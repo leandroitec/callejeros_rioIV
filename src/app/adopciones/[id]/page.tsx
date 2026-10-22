@@ -50,7 +50,7 @@ export default function PetDetailPage() {
       <div className="flex items-center justify-between gap-4">
         <Link
           href="/adopciones"
-          className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300"
+          className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900"
           aria-label="Volver al catálogo de adopciones"
         >
           <ChevronLeft className="w-6 h-6" />
@@ -70,7 +70,7 @@ export default function PetDetailPage() {
           <button
             type="button"
             onClick={handleShare}
-            className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300"
+            className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900"
             aria-label="Compartir ficha de mascota"
           >
             <Share2 className="w-5 h-5" />
@@ -79,7 +79,7 @@ export default function PetDetailPage() {
           <button
             type="button"
             onClick={() => setIsFavorite(!isFavorite)}
-            className={`w-12 h-12 rounded-2xl border shadow-sm flex items-center justify-center transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 ${
+            className={`w-12 h-12 rounded-2xl border shadow-sm flex items-center justify-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 ${
               isFavorite
                 ? 'bg-red-500 border-red-600 text-white scale-105'
                 : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-red-500 active:scale-95'

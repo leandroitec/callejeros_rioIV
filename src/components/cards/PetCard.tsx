@@ -46,7 +46,7 @@ export function PetCard({ pet }: PetCardProps) {
 
   return (
     <article
-      className="group relative bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-neutral-200 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+      className="group relative bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-neutral-200 dark:border-slate-700 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
       aria-labelledby={`pet-name-${pet.id}`}
     >
       {/* Contenedor de Imagen 1:1 (Anatomía Figma) */}
@@ -74,7 +74,7 @@ export function PetCard({ pet }: PetCardProps) {
         <button
           type="button"
           onClick={toggleFavorite}
-          className={`absolute top-3 right-3 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 shadow-md backdrop-blur-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 ${
+          className={`absolute top-3 right-3 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 shadow-md backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 ${
             isFavorite
               ? 'bg-red-500 text-white scale-110'
               : 'bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-200 hover:bg-white hover:text-red-500 active:scale-95'
@@ -124,10 +124,10 @@ export function PetCard({ pet }: PetCardProps) {
           </div>
         </div>
 
-        {/* Botón Primario de Acción (Con 5 Estados Declarados y Mínimo 48px) */}
+        {/* Botón Primario de Acción (Affordance Visual: Naranja Primario con Elevación Táctil) */}
         <Link
           href={`/adopciones/${pet.id}`}
-          className="w-full min-h-[48px] px-4 py-3 rounded-2xl font-heading font-bold text-sm text-center text-white bg-slate-900 dark:bg-white dark:text-slate-900 group-hover:bg-orange-600 dark:group-hover:bg-orange-500 dark:group-hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-400"
+          className="w-full min-h-[48px] px-4 py-3 rounded-2xl font-heading font-bold text-sm text-center text-white bg-orange-600 hover:bg-orange-700 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 shadow-md shadow-orange-600/25 transition-all duration-200 flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900"
         >
           <span>Conocer a {pet.name.split(' ')[0]}</span>
         </Link>

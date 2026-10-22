@@ -68,7 +68,7 @@ export default function TiendaPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="w-11 h-11 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300"
+            className="w-11 h-11 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900"
             aria-label="Volver al inicio"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -83,11 +83,11 @@ export default function TiendaPage() {
           </div>
         </div>
 
-        {/* Carrito de compras */}
-        <div className="relative p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-2">
+        {/* Carrito de compras (Modelo Mental: Ícono Universal + Etiqueta Explícita) */}
+        <div className="relative p-3 px-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-2">
           <ShoppingBag className="w-5 h-5 text-orange-600 dark:text-orange-400" />
           <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
-            {cartCount} {cartCount === 1 ? 'artículo' : 'artículos'}
+            Carrito: {cartCount} {cartCount === 1 ? 'artículo' : 'artículos'}
           </span>
         </div>
       </div>
@@ -104,12 +104,12 @@ export default function TiendaPage() {
         </div>
       </div>
 
-      {/* Grilla de Productos */}
+      {/* Grilla de Productos con Affordance Visual */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <article
             key={product.id}
-            className="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-neutral-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+            className="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-neutral-200 dark:border-slate-700 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
           >
             <div className="relative aspect-square w-full bg-slate-100 dark:bg-slate-900 overflow-hidden">
               <Image

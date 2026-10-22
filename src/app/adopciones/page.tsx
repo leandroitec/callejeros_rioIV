@@ -99,7 +99,7 @@ export default function AdopcionesPage() {
           <button
             type="button"
             onClick={() => setSelectedSpecies('PERRO')}
-            className={`min-h-[48px] px-8 py-3 rounded-2xl font-heading font-extrabold text-sm sm:text-base transition-all duration-200 shadow-sm flex items-center gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300 ${
+            className={`min-h-[48px] px-8 py-3 rounded-2xl font-heading font-extrabold text-sm sm:text-base transition-all duration-200 shadow-sm flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 ${
               selectedSpecies === 'PERRO'
                 ? 'bg-slate-800 dark:bg-orange-600 text-white shadow-md scale-105'
                 : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 active:scale-95'
@@ -112,7 +112,7 @@ export default function AdopcionesPage() {
           <button
             type="button"
             onClick={() => setSelectedSpecies('GATO')}
-            className={`min-h-[48px] px-8 py-3 rounded-2xl font-heading font-extrabold text-sm sm:text-base transition-all duration-200 shadow-sm flex items-center gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 ${
+            className={`min-h-[48px] px-8 py-3 rounded-2xl font-heading font-extrabold text-sm sm:text-base transition-all duration-200 shadow-sm flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-600 dark:focus-visible:ring-offset-slate-900 ${
               selectedSpecies === 'GATO'
                 ? 'bg-slate-800 dark:bg-cyan-600 text-white shadow-md scale-105'
                 : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 active:scale-95'
