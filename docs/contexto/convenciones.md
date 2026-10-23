@@ -106,3 +106,40 @@ Todo botón, enlace de acción, input o tarjeta clickable debe implementar oblig
 │ [ Botón Primario: "Conocer a Manchita" (48px)│
 └──────────────────────────────────────────────┘
 ```
+
+---
+
+## 6. Estándares DCU: Arquetipos en Exteriores y Prevención de Errores (Clase 6)
+
+1. **Touch Targets Gigantes para Uso Móvil con Una Sola Mano**:
+   - En flujos críticos de rescate callejero (como `/reportar-extravio`), los campos de entrada (`<input>`, `<select>`) y botones principales deben tener una altura mínima de `min-h-[56px] h-14` para permitir la pulsación precisa con el pulgar.
+2. **Contraste Reforzado contra Reflejos Solares**:
+   - Bordes de inputs estandarizados en `border-2 border-slate-400 dark:border-slate-500` con fondos puros (`bg-white dark:bg-slate-900`), garantizando legibilidad en plena vía pública bajo luz solar directa.
+   - Tipografía de inputs fijada en `text-base` (16px) para prevenir el zoom automático no deseado de navegadores móviles.
+3. **Foco Nuclear en Datos Críticos (Subida de Imagen)**:
+   - En reportes de extravío, el área de carga de imágenes debe ser el componente visualmente más grande del formulario (`min-h-[290px] border-3 border-dashed border-orange-400`), con soporte de captura directa de cámara móvil (`capture="environment"`).
+4. **Prevención de Envíos Duplicados ("El Problema del Alien")**:
+   - Todo formulario interactivo debe implementar:
+     - Guard de idempotencia en el handler: `if (isSubmitting) return;`.
+     - Botón de envío deshabilitado: `disabled={isSubmitting}` con clase `opacity-70 cursor-wait`.
+     - Retroalimentación dinámica: SVG spinner animado + cambio de texto a gerundio informativo (`loadingText="Publicando...", "Iniciando sesión..."`).
+
+---
+
+## 7. Arquitectura de Información, Labeling y Migas de Pan (Clase 7)
+
+1. **Rotulado Orientado al Usuario (Labeling Empático)**:
+   - Toda acción debe expresarse en lenguaje empático, humano y directo centrado en la misión comunitaria.
+   - Prohibido el uso de términos técnicos o mecánicos como "Enviar Formulario" o "Filtros de Búsqueda". Se utilizan rótulos cálidos: "Publicar Reporte de Extravío", "Adoptar a [Nombre]", "Encontrá a tu compañero".
+   - En barras de búsqueda, los placeholders deben guiar explícitamente: `placeholder="Buscar por nombre, barrio o raza..."`.
+2. **Sistemas de Navegación por Migas de Pan (Breadcrumbs)**:
+   - Obligatorio en vistas de detalle y segundo nivel (`/adopciones/[id]`, `/tienda`, `/padrinos`, `/adopcion-responsable`).
+   - Implementado a través del componente canónico accesible `src/components/ui/Breadcrumbs.tsx` (`<nav aria-label="Migas de pan">`, `<ol>`, `<li>`, `aria-current="page"`).
+   - Tipografía estandarizada en `text-xs sm:text-sm text-slate-500` con enlaces clicables de alto contraste.
+3. **Organización del Menú por Card Sorting**:
+   - El Drawer lateral organiza los enlaces en 3 bloques temáticos con separadores visuales y subtítulos:
+     - **Acciones Principales**: Adopción activa y reporte de extravíos.
+     - **Cómo Ayudar**: Sostén solidario (Tienda, Padrinos y Donaciones).
+     - **Nosotros y Comunidad**: Educación, identidad del refugio y eventos.
+
+

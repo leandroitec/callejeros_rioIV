@@ -217,10 +217,10 @@ export function Navbar() {
             </button>
           </div>
 
-          {/* Lista de Secciones Agrupadas (Figma Wireframe 1) */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
-            {/* Acceso Rápido: Inicio (Home en /) */}
-            <div className="space-y-1">
+          {/* Lista de Secciones Agrupadas por Card Sorting (Clase 7: Arquitectura de Información) */}
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
+            {/* Acceso Rápido: Inicio */}
+            <div>
               <Link
                 href="/"
                 onClick={() => setIsDrawerOpen(false)}
@@ -228,19 +228,22 @@ export function Navbar() {
               >
                 <div className="flex items-center gap-2.5">
                   <Home className="w-5 h-5 text-orange-600 dark:text-orange-400" />
-                  <span>Inicio (Home)</span>
+                  <span>Inicio</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-orange-500" />
               </Link>
             </div>
 
-            {/* Grupo 1: Adopta un Callejero (Modelos Mentales: Ícono + Etiqueta Explícita) */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2">
-                <PawPrint className="w-4 h-4 text-orange-500" />
-                <span>Adopta un Callejero</span>
+            {/* BLOQUE 1: Acciones Principales (Card Sorting: Adoptar y Reportar) */}
+            <div className="space-y-2 border-t border-slate-200 dark:border-slate-800 pt-3">
+              <div className="flex items-center justify-between px-2">
+                <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+                  <PawPrint className="w-4 h-4" />
+                  <span>Acciones Principales</span>
+                </div>
+                <span className="text-[10px] text-slate-400 font-medium">Urgencias y Adopción</span>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-1.5 space-y-1">
+              <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-1.5 space-y-1 border border-slate-200/60 dark:border-slate-700/60">
                 <Link
                   href="/adopciones"
                   onClick={() => setIsDrawerOpen(false)}
@@ -248,7 +251,7 @@ export function Navbar() {
                 >
                   <div className="flex items-center gap-2.5">
                     <PawPrint className="w-4 h-4 text-orange-500 shrink-0" />
-                    <span>Adoptar Mascota</span>
+                    <span>Mascotas en Adopción</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
@@ -270,45 +273,84 @@ export function Navbar() {
                 >
                   <div className="flex items-center gap-2.5">
                     <AlertTriangle className="w-4 h-4 text-red-500 shrink-0" />
-                    <span className="text-red-600 dark:text-red-400 font-semibold">Reportar Extravío</span>
+                    <span className="text-red-600 dark:text-red-400 font-bold">Reportar Extravío</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-red-400" />
                 </Link>
               </div>
             </div>
 
-            {/* Grupo 2: Noticias */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2">
-                <Newspaper className="w-4 h-4 text-cyan-500" />
-                <span>Noticias y Comunidad</span>
+            {/* BLOQUE 2: Cómo Ayudar (Card Sorting: Tienda, Padrinos y Donaciones) */}
+            <div className="space-y-2 border-t border-slate-200 dark:border-slate-800 pt-3">
+              <div className="flex items-center justify-between px-2">
+                <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-teal-600 dark:text-teal-400">
+                  <CreditCard className="w-4 h-4" />
+                  <span>Cómo Ayudar</span>
+                </div>
+                <span className="text-[10px] text-slate-400 font-medium">Soporte Solidario</span>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-1.5">
+              <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-1.5 space-y-1 border border-slate-200/60 dark:border-slate-700/60">
                 <Link
-                  href="/#eventos"
+                  href="/tienda"
                   onClick={() => setIsDrawerOpen(false)}
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-cyan-600 transition-all min-h-[44px]"
+                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-teal-600 transition-all min-h-[44px]"
                 >
                   <div className="flex items-center gap-2.5">
-                    <Newspaper className="w-4 h-4 text-cyan-500 shrink-0" />
-                    <span>Eventos Benéficos y Noticias</span>
+                    <ShoppingBag className="w-4 h-4 text-teal-500 shrink-0" />
+                    <span>Tienda Solidaria</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                </Link>
+                <Link
+                  href="/padrinos"
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-teal-600 transition-all min-h-[44px]"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Heart className="w-4 h-4 text-teal-500 shrink-0" />
+                    <span>Padrinos y Madrinas</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                </Link>
+                <Link
+                  href="/#donaciones"
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-teal-600 transition-all min-h-[44px]"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <CreditCard className="w-4 h-4 text-teal-500 shrink-0" />
+                    <span>Donaciones Económicas</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
               </div>
             </div>
 
-            {/* Grupo 3: Información */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2">
-                <Info className="w-4 h-4 text-amber-500" />
-                <span>Información</span>
+            {/* BLOQUE 3: Nosotros y Comunidad (Card Sorting: Guía, Quiénes Somos y Eventos) */}
+            <div className="space-y-2 border-t border-slate-200 dark:border-slate-800 pt-3">
+              <div className="flex items-center justify-between px-2">
+                <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                  <Info className="w-4 h-4" />
+                  <span>Nosotros y Comunidad</span>
+                </div>
+                <span className="text-[10px] text-slate-400 font-medium">Información y Guías</span>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-1.5 space-y-1">
+              <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-1.5 space-y-1 border border-slate-200/60 dark:border-slate-700/60">
+                <Link
+                  href="/adopcion-responsable"
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-amber-600 transition-all min-h-[44px]"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span>Guía de Adopción Responsable</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                </Link>
                 <Link
                   href="/#quienes-somos"
                   onClick={() => setIsDrawerOpen(false)}
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-orange-600 transition-all min-h-[44px]"
+                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-amber-600 transition-all min-h-[44px]"
                 >
                   <div className="flex items-center gap-2.5">
                     <Users className="w-4 h-4 text-amber-500 shrink-0" />
@@ -317,56 +359,13 @@ export function Navbar() {
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
-                  href="/adopcion-responsable"
+                  href="/#eventos"
                   onClick={() => setIsDrawerOpen(false)}
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-orange-600 transition-all min-h-[44px]"
+                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-amber-600 transition-all min-h-[44px]"
                 >
                   <div className="flex items-center gap-2.5">
-                    <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
-                    <span>Guía de Adopción Responsable</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Grupo 4: Quiero Colaborar (Modelos Mentales: Ícono + Etiqueta Explícita) */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2">
-                <CreditCard className="w-4 h-4 text-emerald-500" />
-                <span>Quiero Colaborar</span>
-              </div>
-              <div className="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-1.5 space-y-1">
-                <Link
-                  href="/#donaciones"
-                  onClick={() => setIsDrawerOpen(false)}
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-emerald-600 transition-all min-h-[44px]"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <CreditCard className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>Donaciones Económicas</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
-                </Link>
-                <Link
-                  href="/padrinos"
-                  onClick={() => setIsDrawerOpen(false)}
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-emerald-600 transition-all min-h-[44px]"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Heart className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>Apadrinar Tratamiento</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
-                </Link>
-                <Link
-                  href="/tienda"
-                  onClick={() => setIsDrawerOpen(false)}
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 hover:text-emerald-600 transition-all min-h-[44px]"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <ShoppingBag className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>Tienda Solidaria</span>
+                    <Newspaper className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span>Eventos Benéficos y Noticias</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>

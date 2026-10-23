@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Heart, CreditCard, ShieldCheck, CheckCircle2, ChevronLeft, Sparkles } from 'lucide-react';
 import { SuccessModal } from '@/components/modals/SuccessModal';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 
 export default function PadrinosPage() {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
@@ -34,7 +35,16 @@ export default function PadrinosPage() {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-6 sm:space-y-8">
+      {/* Migas de Pan (Breadcrumbs - Arquitectura de Información) */}
+      <Breadcrumbs
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Cómo Ayudar', href: '/#donaciones' },
+          { label: 'Padrinos y Madrinas' },
+        ]}
+      />
+
       <div className="flex items-center gap-3">
         <Link
           href="/"

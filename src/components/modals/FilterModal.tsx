@@ -126,7 +126,7 @@ export function FilterModal({
             <div className="flex items-center gap-2">
               <SlidersHorizontal className="w-5 h-5 text-orange-600 dark:text-orange-400" />
               <h2 id="filter-title" className="font-heading font-extrabold text-lg text-slate-900 dark:text-white">
-                Filtros de búsqueda
+                Encontrá a tu compañero
               </h2>
             </div>
             <button
@@ -147,8 +147,8 @@ export function FilterModal({
               type="text"
               value={localFilters.search}
               onChange={(e) => setLocalFilters({ ...localFilters, search: e.target.value })}
-              placeholder="Buscar por nombre, barrio, etc..."
-              aria-label="Buscar mascotas por nombre o barrio"
+              placeholder="Buscar por nombre, barrio o raza..."
+              aria-label="Buscar mascotas por nombre, barrio o raza"
               className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 transition-all min-h-[44px]"
             />
           </div>
@@ -249,14 +249,14 @@ export function FilterModal({
             onClick={handleApply}
             className="flex-1 min-h-[50px] px-6 py-3.5 rounded-2xl font-heading font-extrabold text-sm uppercase tracking-wider bg-orange-600 hover:bg-orange-700 hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 text-white shadow-lg shadow-orange-600/25 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 flex items-center justify-center gap-2"
           >
-            <span>Ver Resultados</span>
+            <span>Ver mascotas encontradas</span>
           </button>
           <button
             type="button"
             onClick={handleReset}
             className="min-h-[44px] px-3.5 py-2.5 rounded-xl font-heading font-semibold text-xs sm:text-sm text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-400 dark:focus-visible:ring-offset-slate-900 flex items-center justify-center shrink-0"
           >
-            Limpiar Filtros
+            Restablecer filtros
           </button>
         </div>
       </div>

@@ -9,6 +9,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: ButtonVariant;
   size?: ButtonSize;
   isLoading?: boolean;
+  loadingText?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 }
@@ -20,7 +21,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
  * 2. Hover: Indicador claro de interactividad (hover:bg-orange-600 / hover:bg-teal-600)
  * 3. Active: Sensación háptica de hundimiento físico (active:scale-95)
  * 4. Focus: Anillo accesible de alto contraste (focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:outline-none)
- * 5. Disabled: Estado inactivo para formularios incompletos (disabled:opacity-50 disabled:cursor-not-allowed)
+ * 5. Disabled / Loading: Estado inactivo con feedback de carga (opacity-70 cursor-wait cuando carga, opacity-50 cuando está deshabilitado)
  */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -29,6 +30,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       variant = 'primary',
       size = 'md',
       isLoading = false,
+      loadingText,
       leftIcon,
       rightIcon,
       disabled,
@@ -43,7 +45,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       'inline-flex items-center justify-center font-heading font-bold rounded-2xl transition-all duration-200 select-none cursor-pointer ' +
       'active:scale-95 ' + // 3. Estado Active
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 ' + // 4. Estado Focus
-      'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none disabled:active:scale-100'; // 5. Estado Disabled
+      'disabled:cursor-not-allowed disabled:pointer-events-none disabled:active:scale-100'; // 5. Estado Disabled base
 
     // 2. Variantes según psicología del color y semántica
     const variantStyles: Record<ButtonVariant, string> = {
@@ -64,12 +66,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         'bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-600/20 hover:shadow-lg focus-visible:ring-red-400',
     };
 
-    // 3. Escala de tamaños con tap target móvil accesible (mínimo 44px para md/lg)
+    // 3. Escala de tamaños con tap target móvil gigante (mínimo 56px / h-14 para lg en exteriores)
     const sizeStyles: Record<ButtonSize, string> = {
       sm: 'min-h-[40px] px-3.5 py-2 text-xs gap-1.5',
       md: 'min-h-[48px] px-6 py-3 text-sm gap-2',
-      lg: 'min-h-[52px] px-7 py-3.5 text-base gap-2.5',
+      lg: 'min-h-[56px] h-14 px-7 py-3.5 text-base gap-2.5',
     };
+
+    // Estado visual disabled / loading
+    const stateStyles = isLoading
+      ? 'opacity-70 cursor-wait'
+      : disabled
+      ? 'disabled:opacity-50'
+      : '';
 
     return (
       <button
@@ -77,16 +86,16 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         type={type}
         disabled={disabled || isLoading}
         aria-busy={isLoading}
-        className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+        className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${stateStyles} ${className}`}
         {...props}
       >
         {isLoading ? (
           <>
             <span
-              className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin shrink-0"
+              className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin shrink-0"
               aria-hidden="true"
             />
-            <span>Cargando...</span>
+            <span>{loadingText || 'Cargando...'}</span>
           </>
         ) : (
           <>

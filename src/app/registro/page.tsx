@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronLeft, User, Mail, Lock, Eye, EyeOff, KeyRound, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { SuccessModal } from '@/components/modals/SuccessModal';
+import { Button } from '@/components/ui/Button';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -63,6 +64,8 @@ export default function RegisterPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return; // Prevención del Problema del Alien (evitar envíos duplicados)
+
     const nameErr = validateFullName(fullName);
     const emailErr = validateEmail(email);
     const passErr = validatePassword(password);
@@ -110,21 +113,22 @@ export default function RegisterPage() {
         noValidate
         className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-6"
       >
-        {/* Full Name Input (Figma: User Icon - Gestalt: Proximidad directa label-input) */}
+        {/* Full Name Input (Figma: User Icon - Touch Target Gigante h-14) */}
         <div>
           <label
             htmlFor="register-name"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
           >
             Nombre Completo
           </label>
           <div className="relative">
-            <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
             <input
               id="register-name"
               type="text"
               autoComplete="name"
               required
+              disabled={isSubmitting}
               aria-required="true"
               aria-invalid={touched.fullName && !!errors.fullName ? 'true' : 'false'}
               aria-describedby={touched.fullName && errors.fullName ? 'register-name-error' : undefined}
@@ -137,10 +141,10 @@ export default function RegisterPage() {
                 }
               }}
               placeholder="Ej: Alt Efe Cuatro"
-              className={`w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all min-h-[48px] ${
+              className={`w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border-2 text-base text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none transition-all min-h-[56px] h-14 ${
                 touched.fullName && errors.fullName
                   ? 'border-red-500 focus:ring-2 focus:ring-red-500 dark:border-red-500'
-                  : 'border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500'
+                  : 'border-slate-400 dark:border-slate-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500'
               }`}
             />
           </div>
@@ -152,21 +156,22 @@ export default function RegisterPage() {
           )}
         </div>
 
-        {/* Email Input (Figma: Mail Icon - Gestalt: Proximidad directa label-input) */}
+        {/* Email Input (Figma: Mail Icon - Touch Target Gigante h-14) */}
         <div>
           <label
             htmlFor="register-email"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
           >
             Correo Electrónico
           </label>
           <div className="relative">
-            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
             <input
               id="register-email"
               type="email"
               autoComplete="email"
               required
+              disabled={isSubmitting}
               aria-required="true"
               aria-invalid={touched.email && !!errors.email ? 'true' : 'false'}
               aria-describedby={touched.email && errors.email ? 'register-email-error' : undefined}
@@ -179,10 +184,10 @@ export default function RegisterPage() {
                 }
               }}
               placeholder="alt_f4@mail.com"
-              className={`w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all min-h-[48px] ${
+              className={`w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border-2 text-base text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none transition-all min-h-[56px] h-14 ${
                 touched.email && errors.email
                   ? 'border-red-500 focus:ring-2 focus:ring-red-500 dark:border-red-500'
-                  : 'border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500'
+                  : 'border-slate-400 dark:border-slate-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500'
               }`}
             />
           </div>
@@ -194,21 +199,22 @@ export default function RegisterPage() {
           )}
         </div>
 
-        {/* Password Input (Figma: Lock Icon + Eye - Gestalt: Proximidad directa label-input) */}
+        {/* Password Input (Figma: Lock Icon + Eye - Touch Target Gigante h-14) */}
         <div>
           <label
             htmlFor="register-password"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
           >
             Contraseña
           </label>
           <div className="relative">
-            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
             <input
               id="register-password"
               type={showPassword ? 'text' : 'password'}
               autoComplete="new-password"
               required
+              disabled={isSubmitting}
               aria-required="true"
               aria-invalid={touched.password && !!errors.password ? 'true' : 'false'}
               aria-describedby={touched.password && errors.password ? 'register-password-error' : undefined}
@@ -221,19 +227,20 @@ export default function RegisterPage() {
                 }
               }}
               placeholder="••••••••••••"
-              className={`w-full pl-10 pr-11 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all min-h-[48px] ${
+              className={`w-full pl-12 pr-12 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border-2 text-base text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none transition-all min-h-[56px] h-14 ${
                 touched.password && errors.password
                   ? 'border-red-500 focus:ring-2 focus:ring-red-500 dark:border-red-500'
-                  : 'border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500'
+                  : 'border-slate-400 dark:border-slate-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500'
               }`}
             />
             <button
               type="button"
+              disabled={isSubmitting}
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 rounded"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 rounded disabled:opacity-50"
               aria-label={showPassword ? 'Ocultar contraseña' : 'Ver contraseña'}
             >
-              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
           </div>
           {touched.password && errors.password && (
@@ -244,14 +251,14 @@ export default function RegisterPage() {
           )}
         </div>
 
-        {/* Inputs de Código OTP (Verificación de Seguridad Comunitaria) */}
+        {/* Inputs de Código OTP (Verificación de Seguridad Comunitaria con Alto Contraste) */}
         <div>
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1">
-              <KeyRound className="w-3.5 h-3.5 text-orange-500" />
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+              <KeyRound className="w-4 h-4 text-orange-500" />
               <span>Código OTP de Verificación</span>
             </span>
-            <span className="text-[11px] text-slate-400">(Opcional demo)</span>
+            <span className="text-[11px] text-slate-500 font-medium">(Opcional demo)</span>
           </div>
           <div className="flex justify-between gap-1.5 sm:gap-2">
             {otpCode.map((digit, idx) => (
@@ -261,30 +268,27 @@ export default function RegisterPage() {
                 type="text"
                 inputMode="numeric"
                 maxLength={1}
+                disabled={isSubmitting}
                 aria-label={`Dígito ${idx + 1} del código de verificación`}
                 value={digit}
                 onChange={(e) => handleOtpChange(idx, e.target.value)}
-                className="w-11 h-12 text-center text-lg font-bold rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 min-h-[44px]"
+                className="w-11 sm:w-12 h-14 text-center text-lg font-bold rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-400 dark:border-slate-500 text-slate-900 dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 min-h-[56px] disabled:opacity-50"
               />
             ))}
           </div>
         </div>
 
-        {/* Botón Primario: Register (Color Primario Naranja con Feedback Inmediato) */}
-        <button
+        {/* Botón Primario: Register (Prevención de Errores DCU / Problema del Alien: Disabled + Opacity-70 + Spinner) */}
+        <Button
           type="submit"
-          disabled={isSubmitting}
-          className="w-full min-h-[50px] py-3.5 px-6 rounded-2xl font-heading font-extrabold text-sm uppercase tracking-wider bg-orange-500 hover:bg-orange-600 hover:shadow-lg active:scale-95 text-white shadow-md shadow-orange-500/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+          variant="primary"
+          size="lg"
+          isLoading={isSubmitting}
+          loadingText="Creando cuenta..."
+          className="w-full uppercase tracking-wider text-sm sm:text-base mt-2"
         >
-          {isSubmitting ? (
-            <>
-              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span>Creando tu cuenta...</span>
-            </>
-          ) : (
-            <span>Crear Cuenta</span>
-          )}
-        </button>
+          Crear Cuenta
+        </Button>
 
         {/* Enlace hacia Login */}
         <div className="text-center pt-2">

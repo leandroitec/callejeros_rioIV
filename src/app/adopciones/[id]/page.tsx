@@ -19,6 +19,7 @@ import {
 import { INITIAL_PETS } from '@/data/mockPets';
 import { AccordionItem } from '@/components/ui/Accordion';
 import { SuccessModal } from '@/components/modals/SuccessModal';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 
 export default function PetDetailPage() {
   const params = useParams();
@@ -45,7 +46,17 @@ export default function PetDetailPage() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 pb-28">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6 pb-28">
+      {/* Migas de Pan (Breadcrumbs - Arquitectura de Información) */}
+      <Breadcrumbs
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Adopciones', href: '/adopciones' },
+          { label: pet.species === 'GATO' ? 'Gatos' : 'Perros', href: '/adopciones' },
+          { label: pet.name },
+        ]}
+      />
+
       {/* 1. BARRA SUPERIOR DE DETALLE (Figma: Header con back < y favorito) */}
       <div className="flex items-center justify-between gap-4">
         <Link

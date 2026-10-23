@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ShoppingBag, ChevronLeft, Check, Plus, Heart } from 'lucide-react';
 import { SuccessModal } from '@/components/modals/SuccessModal';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 
 interface Product {
   id: string;
@@ -62,7 +63,16 @@ export default function TiendaPage() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-6 sm:space-y-8">
+      {/* Migas de Pan (Breadcrumbs - Arquitectura de Información) */}
+      <Breadcrumbs
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Cómo Ayudar', href: '/#donaciones' },
+          { label: 'Tienda Solidaria' },
+        ]}
+      />
+
       {/* Barra superior */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">

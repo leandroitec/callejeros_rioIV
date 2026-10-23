@@ -3,10 +3,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { ShieldCheck, Home, Calendar, Stethoscope, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 
 export default function AdopcionResponsablePage() {
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-6 sm:space-y-8">
+      {/* Migas de Pan (Breadcrumbs - Arquitectura de Información) */}
+      <Breadcrumbs
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Nosotros y Comunidad', href: '/#quienes-somos' },
+          { label: 'Adopción Responsable' },
+        ]}
+      />
+
       <div className="flex items-center gap-3">
         <Link
           href="/"

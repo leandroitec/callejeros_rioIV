@@ -215,3 +215,56 @@ Este documento registra cronológicamente todas las decisiones arquitectónicas,
   - Feedback táctil y visual inmediato en cada interacción del usuario, erradicando incertidumbres.
   - Accesibilidad WCAG AA garantizada tanto en contraste cromático como en navegación por teclado.
 
+---
+
+## [ADR-012] · [2026-10-22 20:55] Diseño Centrado en el Usuario (DCU): Arquetipos, Contexto Extremo y Prevención de Envíos Duplicados (Clase 6)
+
+- **Estado**: Aceptado
+- **Contexto**:
+  Bajo los fundamentos de la **Clase 6: Diseñar para Humanos**, se requería diseñar para el contexto y los puntos de dolor de nuestras Personas, especialmente el **Rescatista Ocasional**, quien encuentra un animal en la vía pública, opera el dispositivo con una sola mano bajo luz solar directa (reflejos) y con posibles fluctuaciones de conectividad móvil en Río Cuarto. Asimismo, en la **Fase de Evaluación DCU**, se debía prevenir el "Problema del Alien" (usuarios impacientes presionando botones múltiples veces generando registros duplicados en SQLite).
+- **Decisión**:
+  1. **Contexto de Uso (El Rescatista Ocasional en Exteriores)**:
+     - Touch targets gigantes de al menos `h-14` / `min-h-[56px]` en todos los campos de entrada, botones de acción y selectores de situación en formularios críticos.
+     - Contraste reforzado en bordes (`border-2 border-slate-400 dark:border-slate-500`) y fondos puros (`bg-white dark:bg-slate-900`) para garantizar legibilidad inmediata bajo reflejos solares directos.
+     - Tipografía de inputs fijada en `text-base` (16px) para evitar el zoom intrusivo automático de los navegadores móviles (iOS Safari / Android Chrome).
+  2. **Puntos de Dolor y Esfuerzo (Foco Nuclear en la Fotografía)**:
+     - En `/reportar-extravio`, el botón de subida de fotos se convirtió en el elemento visualmente más grande del formulario (`min-h-[290px] sm:min-h-[330px] border-3 border-dashed border-orange-400`), eliminando fricciones al ser el dato más crucial.
+     - Apertura directa de la cámara trasera móvil mediante el atributo `capture="environment"`.
+     - Previsualización 1:1 con controles táctiles gigantes (`min-h-[52px]`) para cambiar o remover la foto sin saltos de maquetación (CLS).
+  3. **Fase de Evaluación DCU (Prevención de Errores - Problema del Alien)**:
+     - Guard de idempotencia en todos los handlers de envío (`if (isSubmitting) return;`).
+     - Estandarización del estado `isLoading` en el componente canónico `Button.tsx`: transición a `disabled`, atenuación visual `opacity-70 cursor-wait`, y cambio a indicador dinámico con spinner SVG animado y texto contextual explícito ("Publicando reporte...", "Iniciando sesión...", "Creando cuenta...").
+- **Consecuencias**:
+  - Operatividad ergonómica con una sola mano en la calle bajo cualquier condición lumínica.
+  - Erradicación de registros huérfanos o duplicados en SQLite generados por ansiedad o mala señal.
+  - Empatía técnica y confirmación visual inmediata del estado del sistema.
+
+---
+
+## [ADR-013] · [2026-10-22 21:05] Arquitectura de Información: Rotulado Empático (Labeling), Migas de Pan (Breadcrumbs) y Organización del Menú por Card Sorting (Clase 7)
+
+- **Estado**: Aceptado
+- **Contexto**:
+  Bajo los fundamentos de la **Clase 7: Arquitectura de Información y Card Sorting**, la navegación y el contenido de "Callejeros Río IV" requerían sistematizar su taxonomía, eliminar etiquetas mecánicas o técnicas, dotar al usuario de orientación espacial permanente (breadcrumbs) y estructurar los enlaces del menú mediante una agrupación lógica resultante de Card Sorting simulado.
+- **Decisión**:
+  1. **Rotulado Orientado al Usuario (Labeling Empático)**:
+     - Erradicación de terminología robótica o despersonalizada en toda la aplicación.
+     - En el modal y controles de adopción, "Filtros de búsqueda" se transformó en "Encontrá a tu compañero".
+     - En botones de envío, se emplean verbos cálidos orientados a la acción comunitaria ("Publicar Reporte de Extravío", "Publicar en Adopción", "Adoptar a [Nombre]") en vez de "Enviar Formulario".
+     - En la barra de búsqueda de mascotas, se fijó el placeholder guiado: `placeholder="Buscar por nombre, barrio o raza..."`.
+  2. **Sistemas de Navegación (Migas de Pan / Breadcrumbs)**:
+     - Creación del componente canónico accesible `src/components/ui/Breadcrumbs.tsx` con marcado semántico `<nav aria-label="Migas de pan">`, lista ordenada `<ol>`, items `<li>` y `aria-current="page"`.
+     - Integración en Detalle de Mascota (`/adopciones/[id]`: `Inicio > Adopciones > Perros/Gatos > [Nombre]`), en Tienda Solidaria (`/tienda`: `Inicio > Cómo Ayudar > Tienda Solidaria`), en Padrinos y en Guía de Adopción Responsable, permitiendo retroceder jerárquicamente con un solo tap sin recurrir al botón de atrás del navegador.
+  3. **Organización del Menú (Card Sorting Simulado)**:
+     - Reestructuración de los enlaces del Drawer lateral en 3 bloques lógicos cohesivos con encabezados, subtítulos explicativos y bordes separadores:
+       - **Bloque 1: Acciones Principales** (Mascotas en Adopción, Publicar en Adopción, Reportar Extravío).
+       - **Bloque 2: Cómo Ayudar** (Tienda Solidaria, Padrinos y Madrinas, Donaciones Económicas).
+       - **Bloque 3: Nosotros y Comunidad** (Guía de Adopción Responsable, Quiénes Somos, Eventos Benéficos y Noticias).
+       - **Bloque 4: Mi Perfil** (Crear Cuenta / Ingresar).
+- **Consecuencias**:
+  - Eliminación de la sobrecarga cognitiva al reducir un listado plano de 9 ítems a 3 categorías semánticas evidentes.
+  - Claridad de ubicación ("¿dónde estoy y cómo vuelvo?") gracias a las migas de pan.
+  - Lenguaje empático y humano que genera cercanía afectiva con adoptantes y donantes.
+
+
+

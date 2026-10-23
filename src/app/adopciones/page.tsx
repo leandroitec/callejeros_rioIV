@@ -6,6 +6,7 @@ import { SlidersHorizontal, Search, RefreshCw, PawPrint, Sparkles, ChevronLeft }
 import { INITIAL_PETS, PetData } from '@/data/mockPets';
 import { PetCard } from '@/components/cards/PetCard';
 import { FilterModal, FilterState } from '@/components/modals/FilterModal';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 
 export default function AdopcionesPage() {
   const [selectedSpecies, setSelectedSpecies] = useState<'TODOS' | 'PERRO' | 'GATO'>('PERRO');
@@ -76,6 +77,14 @@ export default function AdopcionesPage() {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-6">
+      {/* Migas de Pan (Breadcrumbs - Arquitectura de Información) */}
+      <Breadcrumbs
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Mascotas en Adopción' },
+        ]}
+      />
+
       {/* Botón Volver al Inicio (Figma navigation) */}
       <div className="flex items-center">
         <Link
@@ -123,15 +132,28 @@ export default function AdopcionesPage() {
           </button>
         </div>
 
-        {/* Link / Botón Filtros... (Figma) */}
-        <div className="pt-2">
+        {/* Barra de Búsqueda Directa con rotulado empático (Clase 7) */}
+        <div className="relative max-w-md mx-auto pt-1">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+          <input
+            type="text"
+            value={filters.search}
+            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+            placeholder="Buscar por nombre, barrio o raza..."
+            aria-label="Buscar mascotas por nombre, barrio o raza"
+            className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all min-h-[46px]"
+          />
+        </div>
+
+        {/* Link / Botón Filtros (Rotulado empático: Encontrá a tu compañero) */}
+        <div className="pt-1">
           <button
             type="button"
             onClick={() => setIsFilterModalOpen(true)}
             className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-orange-600 dark:text-orange-400 hover:underline min-h-[44px] px-4 py-2 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
           >
             <SlidersHorizontal className="w-4 h-4" />
-            <span>Filtros avanzados...</span>
+            <span>Encontrá a tu compañero (Filtros avanzados)</span>
             {activeFiltersCount > 0 && (
               <span className="w-5 h-5 bg-orange-600 text-white rounded-full text-[11px] font-bold flex items-center justify-center">
                 {activeFiltersCount}

@@ -14,6 +14,7 @@ import {
   X,
 } from 'lucide-react';
 import { SuccessModal } from '@/components/modals/SuccessModal';
+import { Button } from '@/components/ui/Button';
 
 export default function ReportarExtravioPage() {
   const [reportType, setReportType] = useState<'EXTRAVIO' | 'AVISTAMIENTO'>('EXTRAVIO');
@@ -94,6 +95,8 @@ export default function ReportarExtravioPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isSubmitting) return; // Prevención del Problema del Alien (doble click por impaciencia)
+
     const nameErr = validatePetName(petName);
     const neighErr = validateNeighborhood(neighborhood);
     const phoneErr = validateContactPhone(contactPhone);
@@ -173,19 +176,20 @@ export default function ReportarExtravioPage() {
         noValidate
         className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-6"
       >
-        {/* Selector de Tipo de Reporte (Gestalt: Proximidad) */}
+        {/* Selector de Tipo de Reporte (Touch Target Gigante h-14 / min-h-[56px]) */}
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
             Tipo de Situación
           </label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button
               type="button"
+              disabled={isSubmitting}
               onClick={() => setReportType('EXTRAVIO')}
-              className={`p-3 rounded-2xl font-heading font-bold text-xs sm:text-sm text-center border-2 transition-all min-h-[48px] flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600 dark:focus-visible:ring-offset-slate-900 ${
+              className={`p-3.5 rounded-2xl font-heading font-extrabold text-sm sm:text-base text-center border-2 transition-all min-h-[56px] h-14 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600 dark:focus-visible:ring-offset-slate-900 active:scale-98 disabled:opacity-70 ${
                 reportType === 'EXTRAVIO'
-                  ? 'bg-red-600 text-white border-red-600 shadow-md scale-102'
-                  : 'bg-slate-50 dark:bg-slate-900/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-slate-300'
+                  ? 'bg-red-600 text-white border-red-600 shadow-md scale-101'
+                  : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 border-slate-400 dark:border-slate-500 hover:border-slate-600'
               }`}
               aria-pressed={reportType === 'EXTRAVIO'}
             >
@@ -194,11 +198,12 @@ export default function ReportarExtravioPage() {
 
             <button
               type="button"
+              disabled={isSubmitting}
               onClick={() => setReportType('AVISTAMIENTO')}
-              className={`p-3 rounded-2xl font-heading font-bold text-xs sm:text-sm text-center border-2 transition-all min-h-[48px] flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-600 dark:focus-visible:ring-offset-slate-900 ${
+              className={`p-3.5 rounded-2xl font-heading font-extrabold text-sm sm:text-base text-center border-2 transition-all min-h-[56px] h-14 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-600 dark:focus-visible:ring-offset-slate-900 active:scale-98 disabled:opacity-70 ${
                 reportType === 'AVISTAMIENTO'
-                  ? 'bg-cyan-600 text-white border-cyan-600 shadow-md scale-102'
-                  : 'bg-slate-50 dark:bg-slate-900/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-slate-300'
+                  ? 'bg-cyan-600 text-white border-cyan-600 shadow-md scale-101'
+                  : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 border-slate-400 dark:border-slate-500 hover:border-slate-600'
               }`}
               aria-pressed={reportType === 'AVISTAMIENTO'}
             >
@@ -207,21 +212,104 @@ export default function ReportarExtravioPage() {
           </div>
         </div>
 
-        {/* Nombre del animal o descripción rápida (Gestalt: Proximidad directa label-input) */}
+        {/* Carga de Imagen con Foco Nuclear DCU (Elemento visualmente más grande del formulario para el Rescatista Ocasional) */}
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+              <span>Foto del Animal</span>
+              <span className="text-orange-600 dark:text-orange-400 font-bold">(Dato más crucial)</span>
+            </label>
+            {imagePreview && (
+              <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-700">
+                ✓ Foto cargada
+              </span>
+            )}
+          </div>
+
+          {imagePreview ? (
+            /* Previsualización que reemplaza exactamente el contenedor de subida (Mapeo Natural 1:1) */
+            <div className="relative w-full h-72 sm:h-84 rounded-3xl overflow-hidden border-3 border-orange-500 shadow-lg group">
+              <img
+                src={imagePreview}
+                alt="Vista previa de la foto del animal extraviado"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 flex items-end justify-between p-4 sm:p-6">
+                <label
+                  htmlFor="pet-image"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white text-slate-900 text-sm font-extrabold shadow-lg cursor-pointer hover:bg-slate-100 hover:scale-105 transition-all min-h-[52px] focus-within:ring-2 focus-within:ring-orange-500"
+                >
+                  <Camera className="w-5 h-5 text-orange-600" />
+                  <span>Cambiar Foto</span>
+                  <input
+                    id="pet-image"
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    disabled={isSubmitting}
+                    onChange={handleImageChange}
+                    className="sr-only"
+                  />
+                </label>
+                <button
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={() => setImagePreview(null)}
+                  className="inline-flex items-center gap-1.5 px-5 py-3 rounded-2xl bg-red-600 hover:bg-red-700 text-white text-sm font-extrabold shadow-lg transition-all hover:scale-105 min-h-[52px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 disabled:opacity-50"
+                  aria-label="Quitar foto seleccionada"
+                >
+                  <X className="w-5 h-5" />
+                  <span>Quitar</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            /* Área inicial de carga: elemento visualmente más grande del formulario para uso rápido con una sola mano bajo el sol */
+            <label
+              htmlFor="pet-image"
+              className="relative flex flex-col items-center justify-center p-8 sm:p-12 min-h-[290px] sm:min-h-[330px] border-3 border-dashed border-orange-400 dark:border-orange-500 bg-orange-50/70 dark:bg-orange-950/25 hover:bg-orange-100/70 dark:hover:bg-orange-950/40 rounded-3xl cursor-pointer transition-all group focus-within:ring-4 focus-within:ring-orange-500 active:scale-[0.99] text-center"
+            >
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-orange-500 text-white shadow-xl shadow-orange-500/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Camera className="w-10 h-10 sm:w-12 sm:h-12" />
+              </div>
+              <span className="block text-lg sm:text-xl font-heading font-extrabold text-slate-900 dark:text-white">
+                TOCÁ ACÁ PARA TOMAR FOTO O SUBIR
+              </span>
+              <span className="block text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium max-w-sm mt-1.5 leading-relaxed">
+                La foto es el dato más crucial para que la comunidad de Río Cuarto reconozca al animal al instante.
+              </span>
+              <div className="mt-3 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-orange-200/90 dark:bg-orange-900/60 text-orange-900 dark:text-orange-100 text-xs font-bold">
+                <span>📸 Cámara directa o galería</span>
+              </div>
+              <input
+                id="pet-image"
+                type="file"
+                accept="image/*"
+                capture="environment"
+                disabled={isSubmitting}
+                onChange={handleImageChange}
+                className="sr-only"
+              />
+            </label>
+          )}
+        </div>
+
+        {/* Nombre del animal o descripción rápida (Touch target gigante h-14, borde de alto contraste border-slate-400) */}
         <div>
           <label
             htmlFor="pet-name"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
           >
             Nombre de la Mascota / Referencia
           </label>
           <div className="relative">
-            <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
             <input
               id="pet-name"
               name="petName"
               type="text"
               required
+              disabled={isSubmitting}
               aria-required="true"
               aria-invalid={touched.petName && !!errors.petName ? 'true' : 'false'}
               aria-describedby={touched.petName && errors.petName ? 'pet-name-error' : undefined}
@@ -234,10 +322,10 @@ export default function ReportarExtravioPage() {
                 }
               }}
               placeholder="Ej: Manchita, o 'Perro negro con collar rojo'"
-              className={`w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all min-h-[48px] ${
+              className={`w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border-2 text-base text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none transition-all min-h-[56px] h-14 ${
                 touched.petName && errors.petName
                   ? 'border-red-500 focus:ring-2 focus:ring-red-500 dark:border-red-500'
-                  : 'border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500'
+                  : 'border-slate-400 dark:border-slate-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500'
               }`}
             />
           </div>
@@ -249,20 +337,21 @@ export default function ReportarExtravioPage() {
           )}
         </div>
 
-        {/* Barrio de Río Cuarto (Gestalt: Proximidad directa label-select) */}
+        {/* Barrio de Río Cuarto (Touch target gigante h-14, borde de alto contraste border-slate-400) */}
         <div>
           <label
             htmlFor="neighborhood"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
           >
             Barrio / Zona de Río Cuarto
           </label>
           <div className="relative">
-            <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
             <select
               id="neighborhood"
               name="neighborhood"
               required
+              disabled={isSubmitting}
               aria-required="true"
               aria-invalid={touched.neighborhood && !!errors.neighborhood ? 'true' : 'false'}
               aria-describedby={touched.neighborhood && errors.neighborhood ? 'neighborhood-error' : undefined}
@@ -274,10 +363,10 @@ export default function ReportarExtravioPage() {
                   setErrors((prev) => ({ ...prev, neighborhood: validateNeighborhood(e.target.value) }));
                 }
               }}
-              className={`w-full pl-10 pr-10 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border text-sm text-slate-900 dark:text-white focus:outline-none transition-all min-h-[48px] appearance-none cursor-pointer ${
+              className={`w-full pl-12 pr-11 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border-2 text-base text-slate-900 dark:text-white focus:outline-none transition-all min-h-[56px] h-14 appearance-none cursor-pointer ${
                 touched.neighborhood && errors.neighborhood
                   ? 'border-red-500 focus:ring-2 focus:ring-red-500 dark:border-red-500'
-                  : 'border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500'
+                  : 'border-slate-400 dark:border-slate-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500'
               }`}
             >
               <option value="" disabled>
@@ -289,7 +378,7 @@ export default function ReportarExtravioPage() {
                 </option>
               ))}
             </select>
-            <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
           </div>
           {touched.neighborhood && errors.neighborhood && (
             <p id="neighborhood-error" role="alert" className="text-xs font-semibold text-red-600 dark:text-red-400 mt-1 flex items-center gap-1.5">
@@ -299,22 +388,23 @@ export default function ReportarExtravioPage() {
           )}
         </div>
 
-        {/* Teléfono de Contacto (Gestalt: Proximidad directa label-input) */}
+        {/* Teléfono de Contacto (Touch target gigante h-14, borde de alto contraste border-slate-400) */}
         <div>
           <label
             htmlFor="contact-phone"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
           >
             Teléfono de Contacto (WhatsApp)
           </label>
           <div className="relative">
-            <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
             <input
               id="contact-phone"
               name="contactPhone"
               type="tel"
               autoComplete="tel"
               required
+              disabled={isSubmitting}
               aria-required="true"
               aria-invalid={touched.contactPhone && !!errors.contactPhone ? 'true' : 'false'}
               aria-describedby={touched.contactPhone && errors.contactPhone ? 'contact-phone-error' : undefined}
@@ -327,10 +417,10 @@ export default function ReportarExtravioPage() {
                 }
               }}
               placeholder="Ej: 358 154 123456"
-              className={`w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all min-h-[48px] ${
+              className={`w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border-2 text-base text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none transition-all min-h-[56px] h-14 ${
                 touched.contactPhone && errors.contactPhone
                   ? 'border-red-500 focus:ring-2 focus:ring-red-500 dark:border-red-500'
-                  : 'border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500'
+                  : 'border-slate-400 dark:border-slate-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500'
               }`}
             />
           </div>
@@ -342,86 +432,11 @@ export default function ReportarExtravioPage() {
           )}
         </div>
 
-        {/* Carga de Imagen con Mapeo Natural 1:1 (Gestalt: Proximidad) */}
-        <div>
-          <div className="flex items-center justify-between mb-1">
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Foto del Animal (Crucial para reconocimiento)
-            </label>
-            {imagePreview && (
-              <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
-                ✓ Foto cargada
-              </span>
-            )}
-          </div>
-
-          {imagePreview ? (
-            /* Previsualización que reemplaza exactamente el contenedor de subida (Mapeo Natural) */
-            <div className="relative w-full h-64 sm:h-72 rounded-3xl overflow-hidden border-2 border-orange-500 shadow-md group">
-              <img
-                src={imagePreview}
-                alt="Vista previa de la foto del animal extraviado"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/30 flex items-end justify-between p-4">
-                <label
-                  htmlFor="pet-image"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white text-xs font-bold shadow-md cursor-pointer hover:bg-white hover:scale-105 transition-all focus-within:ring-2 focus-within:ring-orange-500"
-                >
-                  <Camera className="w-4 h-4 text-orange-600" />
-                  <span>Cambiar Foto</span>
-                  <input
-                    id="pet-image"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="sr-only"
-                  />
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setImagePreview(null)}
-                  className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-red-600/90 hover:bg-red-600 text-white text-xs font-bold shadow-md transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
-                  aria-label="Quitar foto seleccionada"
-                >
-                  <X className="w-4 h-4" />
-                  <span>Quitar</span>
-                </button>
-              </div>
-            </div>
-          ) : (
-            /* Área inicial de carga con el mismo tamaño espacial */
-            <label
-              htmlFor="pet-image"
-              className="relative flex flex-col items-center justify-center p-8 sm:p-10 h-64 sm:h-72 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-3xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/60 hover:border-orange-500 dark:hover:border-orange-500 transition-all group focus-within:ring-2 focus-within:ring-orange-600"
-            >
-              <div className="flex flex-col items-center gap-3 text-center text-slate-500 dark:text-slate-400">
-                <div className="w-14 h-14 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-600 flex items-center justify-center group-hover:scale-110 shadow-sm transition-transform">
-                  <Camera className="w-7 h-7" />
-                </div>
-                <div>
-                  <span className="block text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200">
-                    Tocá para tomar una foto o subir desde tu celular
-                  </span>
-                  <span className="block text-xs text-slate-400 mt-1">Formatos JPG o PNG hasta 5MB</span>
-                </div>
-              </div>
-              <input
-                id="pet-image"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="sr-only"
-              />
-            </label>
-          )}
-        </div>
-
-        {/* Descripción Breve (Gestalt: Proximidad directa label-textarea) */}
+        {/* Descripción Breve (Borde de alto contraste border-slate-400) */}
         <div>
           <label
             htmlFor="description"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
           >
             Descripción y Rasgos Particulares
           </label>
@@ -430,6 +445,7 @@ export default function ReportarExtravioPage() {
             name="description"
             rows={3}
             required
+            disabled={isSubmitting}
             aria-required="true"
             aria-invalid={touched.description && !!errors.description ? 'true' : 'false'}
             aria-describedby={touched.description && errors.description ? 'description-error' : undefined}
@@ -442,10 +458,10 @@ export default function ReportarExtravioPage() {
               }
             }}
             placeholder="Color de pelaje, tamaño, si lleva collar o placa, comportamiento tímido/asustadizo, etc."
-            className={`w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all ${
+            className={`w-full p-4 rounded-2xl bg-white dark:bg-slate-900 border-2 text-base text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none transition-all min-h-[110px] ${
               touched.description && errors.description
                 ? 'border-red-500 focus:ring-2 focus:ring-red-500 dark:border-red-500'
-                : 'border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500'
+                : 'border-slate-400 dark:border-slate-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500'
             }`}
           />
           {touched.description && errors.description && (
@@ -456,28 +472,24 @@ export default function ReportarExtravioPage() {
           )}
         </div>
 
-        {/* Botón de Envío y Botón Cancelar (Detector de Frustraciones: Jerarquía Visual y Separación) */}
-        <div className="space-y-3 pt-2">
-          <button
+        {/* Botón de Envío y Botón Cancelar (Prevención de Errores DCU / Problema del Alien) */}
+        <div className="space-y-4 pt-2">
+          <Button
             type="submit"
-            disabled={isSubmitting}
-            className="w-full min-h-[52px] py-3.5 px-6 rounded-2xl font-heading font-extrabold text-base bg-orange-500 hover:bg-orange-600 hover:shadow-lg active:scale-95 text-white shadow-md shadow-orange-500/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            variant="primary"
+            size="lg"
+            isLoading={isSubmitting}
+            loadingText="Publicando reporte en Río Cuarto..."
+            className="w-full text-base sm:text-lg uppercase tracking-wider"
           >
-            {isSubmitting ? (
-              <>
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Publicando reporte en Río Cuarto...</span>
-              </>
-            ) : (
-              <span>Publicar Reporte de Extravío</span>
-            )}
-          </button>
+            Publicar Reporte de Extravío
+          </Button>
 
-          {/* Botón Secundario Ghost (Separado para evitar toques accidentales) */}
-          <div className="text-center pt-1">
+          {/* Botón Secundario Ghost (Separado para evitar toques accidentales con una sola mano) */}
+          <div className="text-center">
             <Link
               href="/"
-              className="inline-flex items-center justify-center text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/60 rounded-xl px-4 py-2.5 transition-colors min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+              className="inline-flex items-center justify-center text-sm font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700/60 rounded-2xl px-6 py-3 transition-colors min-h-[52px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
             >
               Cancelar y volver al inicio
             </Link>

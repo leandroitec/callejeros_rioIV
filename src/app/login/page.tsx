@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronLeft, Mail, Lock, Eye, EyeOff, LogIn, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { SuccessModal } from '@/components/modals/SuccessModal';
+import { Button } from '@/components/ui/Button';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -42,6 +43,8 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return; // Prevención del Problema del Alien (evitar envíos duplicados)
+
     const emailErr = validateEmail(email);
     const passErr = validatePassword(password);
 
@@ -94,17 +97,18 @@ export default function LoginPage() {
         <div>
           <label
             htmlFor="login-email"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
+            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
           >
             Correo Electrónico
           </label>
           <div className="relative">
-            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
             <input
               id="login-email"
               type="email"
               autoComplete="email"
               required
+              disabled={isSubmitting}
               aria-required="true"
               aria-invalid={touched.email && !!errors.email ? 'true' : 'false'}
               aria-describedby={touched.email && errors.email ? 'login-email-error' : undefined}
@@ -117,10 +121,10 @@ export default function LoginPage() {
                 }
               }}
               placeholder="tu_email@ejemplo.com"
-              className={`w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all min-h-[48px] ${
+              className={`w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border-2 text-base text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none transition-all min-h-[56px] h-14 ${
                 touched.email && errors.email
                   ? 'border-red-500 focus:ring-2 focus:ring-red-500 dark:border-red-500'
-                  : 'border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500'
+                  : 'border-slate-400 dark:border-slate-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500'
               }`}
             />
           </div>
@@ -134,7 +138,7 @@ export default function LoginPage() {
 
         {/* Password Input (Gestalt: Proximidad directa label-input y mb-6 hacia el botón de acción) */}
         <div>
-          <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center justify-between mb-1.5">
             <label
               htmlFor="login-password"
               className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
@@ -143,19 +147,21 @@ export default function LoginPage() {
             </label>
             <button
               type="button"
+              disabled={isSubmitting}
               onClick={() => alert('Te enviamos un enlace de recuperación a tu email.')}
-              className="text-xs font-semibold text-orange-600 dark:text-orange-400 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 rounded"
+              className="text-xs font-semibold text-orange-600 dark:text-orange-400 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 rounded disabled:opacity-50"
             >
               ¿Olvidaste tu contraseña?
             </button>
           </div>
           <div className="relative">
-            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
             <input
               id="login-password"
               type={showPassword ? 'text' : 'password'}
               autoComplete="current-password"
               required
+              disabled={isSubmitting}
               aria-required="true"
               aria-invalid={touched.password && !!errors.password ? 'true' : 'false'}
               aria-describedby={touched.password && errors.password ? 'login-password-error' : undefined}
@@ -168,19 +174,20 @@ export default function LoginPage() {
                 }
               }}
               placeholder="••••••••••••"
-              className={`w-full pl-10 pr-11 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none transition-all min-h-[48px] ${
+              className={`w-full pl-12 pr-12 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border-2 text-base text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none transition-all min-h-[56px] h-14 ${
                 touched.password && errors.password
                   ? 'border-red-500 focus:ring-2 focus:ring-red-500 dark:border-red-500'
-                  : 'border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500'
+                  : 'border-slate-400 dark:border-slate-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500'
               }`}
             />
             <button
               type="button"
+              disabled={isSubmitting}
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 rounded"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-600 rounded disabled:opacity-50"
               aria-label={showPassword ? 'Ocultar contraseña' : 'Ver contraseña'}
             >
-              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
           </div>
           {touched.password && errors.password && (
@@ -191,24 +198,18 @@ export default function LoginPage() {
           )}
         </div>
 
-        {/* Botón Primario: Login (Color Primario Naranja con Feedback Inmediato) */}
-        <button
+        {/* Botón Primario: Login (Prevención de Errores DCU / Problema del Alien: Disabled + Opacity-70 + Spinner) */}
+        <Button
           type="submit"
-          disabled={isSubmitting}
-          className="w-full min-h-[50px] py-3.5 px-6 rounded-2xl font-heading font-extrabold text-sm uppercase tracking-wider bg-orange-500 hover:bg-orange-600 hover:shadow-lg active:scale-95 text-white shadow-md shadow-orange-500/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-400 dark:focus-visible:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          variant="primary"
+          size="lg"
+          isLoading={isSubmitting}
+          loadingText="Iniciando sesión..."
+          leftIcon={<LogIn className="w-5 h-5" />}
+          className="w-full uppercase tracking-wider text-sm sm:text-base"
         >
-          {isSubmitting ? (
-            <>
-              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span>Iniciando sesión...</span>
-            </>
-          ) : (
-            <>
-              <LogIn className="w-4 h-4" />
-              <span>Iniciar Sesión</span>
-            </>
-          )}
-        </button>
+          Iniciar Sesión
+        </Button>
 
         {/* Enlace hacia Registro */}
         <div className="text-center pt-2">
