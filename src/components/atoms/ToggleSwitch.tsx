@@ -37,22 +37,23 @@ export function ToggleSwitch({
   const activeBg = variant === 'green' ? 'bg-green-500 dark:bg-green-600' : 'bg-orange-600 dark:bg-orange-500';
   const focusRing = variant === 'green' ? 'focus-visible:ring-green-500' : 'focus-visible:ring-orange-500';
 
+  const handleToggle = () => {
+    if (!disabled) onChange(!checked);
+  };
+
   return (
     <div
-      onClick={() => {
-        if (!disabled) onChange(!checked);
-      }}
+      onClick={handleToggle}
       className={`flex items-center justify-between w-full py-2.5 px-3 rounded-2xl transition-colors duration-300 ease-in-out cursor-pointer group select-none hover:bg-slate-50 dark:hover:bg-slate-800/60 ${
         disabled ? 'opacity-50 pointer-events-none cursor-not-allowed' : ''
       } ${className}`}
     >
       <div className="flex-1 pr-4">
-        <label
-          htmlFor={switchId}
+        <span
           className="text-sm font-medium text-slate-800 dark:text-slate-200 cursor-pointer select-none block"
         >
           {label}
-        </label>
+        </span>
         {description && (
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 select-none">
             {description}

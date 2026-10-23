@@ -252,6 +252,188 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 6. MAPA Y ZONAS ACTIVAS DE RÍO CUARTO (Resuelve ancla /#mapa de Footer) */}
+      <section id="mapa" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-neutral-200 dark:border-slate-800 pb-4">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
+              Red Territorial de Río Cuarto
+            </span>
+            <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-1 tracking-tight">
+              Zonas y Barrios de Monitoreo Comunitario
+            </h2>
+          </div>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md">
+            Identificá los puntos de mayor actividad vecinal para reportar avistamientos o sumar tu hogar de tránsito.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-2xl bg-orange-100 dark:bg-orange-950/60 text-orange-600 flex items-center justify-center font-bold">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-white">
+                Banda Norte
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Parque Ecológico, Av. Marcelo T. de Alvear y vecinales aledañas. +35 hogares de tránsito activos.
+              </p>
+            </div>
+            <Link
+              href="/reportar-extravio"
+              className="text-xs font-bold text-orange-600 dark:text-orange-400 hover:underline flex items-center gap-1 pt-2"
+            >
+              <span>Reportar en esta zona</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-2xl bg-cyan-100 dark:bg-cyan-950/60 text-cyan-600 flex items-center justify-center font-bold">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-white">
+                Centro / Plaza Roca
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Punto neurálgico de avistamientos diurnos y carpas de colecta solidaria de alimento y mantas.
+              </p>
+            </div>
+            <Link
+              href="/reportar-extravio"
+              className="text-xs font-bold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 pt-2"
+            >
+              <span>Reportar en esta zona</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center font-bold">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-white">
+                Alberdi / Sabattini
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Zona de fuerte articulación barrial, rescate de cachorros y jornadas de castración municipal.
+              </p>
+            </div>
+            <Link
+              href="/reportar-extravio"
+              className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 pt-2"
+            >
+              <span>Reportar en esta zona</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-2xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center font-bold">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-white">
+                Parque Sarmiento
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Ribera del Río Cuarto y predios abiertos donde se realizan los paseos de socialización y búsqueda.
+              </p>
+            </div>
+            <Link
+              href="/reportar-extravio"
+              className="text-xs font-bold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1 pt-2"
+            >
+              <span>Reportar en esta zona</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. EVENTOS BENÉFICOS Y JORNADAS (Resuelve ancla /#eventos de Navbar y Footer) */}
+      <section id="eventos" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-neutral-200 dark:border-slate-800 pb-4">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+              Agenda Solidaria Río Cuarto
+            </span>
+            <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white mt-1 tracking-tight">
+              Próximos Eventos y Jornadas Comunitarias
+            </h2>
+          </div>
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md">
+            Sumate con tu familia o colaborá como voluntario en nuestras actividades en la ciudad.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <article className="bg-white dark:bg-slate-800 rounded-3xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between space-y-4">
+            <div className="space-y-3">
+              <span className="inline-block bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-xs font-bold px-3 py-1 rounded-full">
+                Sábado 15 de Noviembre
+              </span>
+              <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-white">
+                Jornada de Castración Gratuita
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                En la Vecinal de Barrio Alberdi. Vacunación séxtuple y antirrábica gratuita por orden de llegada con turno previo.
+              </p>
+            </div>
+            <Link
+              href="/adopcion-responsable"
+              className="inline-flex items-center justify-center font-heading font-bold text-xs py-3 px-4 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 hover:bg-emerald-600 hover:text-white transition-all min-h-[44px]"
+            >
+              Requisitos y Turnos
+            </Link>
+          </article>
+
+          <article className="bg-white dark:bg-slate-800 rounded-3xl p-6 border border-orange-500/40 dark:border-orange-500/30 shadow-md flex flex-col justify-between space-y-4 relative">
+            <div className="space-y-3">
+              <span className="inline-block bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-300 text-xs font-bold px-3 py-1 rounded-full">
+                Domingo 23 de Noviembre
+              </span>
+              <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-white">
+                Gran Colecta de Alimento y Abrigos
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Estaremos en Plaza Roca de 16:00 a 20:00 hs recibiendo balanceado para cachorros, mantas y pipetas para rescates urgentes.
+              </p>
+            </div>
+            <Link
+              href="/padrinos"
+              className="inline-flex items-center justify-center font-heading font-bold text-xs py-3 px-4 rounded-xl btn-primary min-h-[44px]"
+            >
+              Cómo Ayudar
+            </Link>
+          </article>
+
+          <article className="bg-white dark:bg-slate-800 rounded-3xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between space-y-4">
+            <div className="space-y-3">
+              <span className="inline-block bg-cyan-100 dark:bg-cyan-950/60 text-cyan-700 dark:text-cyan-300 text-xs font-bold px-3 py-1 rounded-full">
+                Sábado 29 de Noviembre
+              </span>
+              <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-white">
+                Tarde de Paseo y Socialización
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                En el Parque Sarmiento. Vení a pasear con nuestros perritos en adopción, compartir una tarde al aire libre y conocerlos en persona.
+              </p>
+            </div>
+            <Link
+              href="/adopciones"
+              className="inline-flex items-center justify-center font-heading font-bold text-xs py-3 px-4 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 hover:bg-cyan-600 hover:text-white transition-all min-h-[44px]"
+            >
+              Conocer Mascotas
+            </Link>
+          </article>
+        </div>
+      </section>
+
       {/* 6. BOTÓN FLOTANTE "Donaciones (Scroll)" (Figma Wireframe 1: Home) */}
       <a
         href="#donaciones"

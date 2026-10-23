@@ -319,6 +319,35 @@ Este documento registra cronológicamente todas las decisiones arquitectónicas,
   - Mayor tasa de conversión en reportes de extravío y adopciones gracias a la claridad y calidez del lenguaje.
   - Experiencia optimizada para usuarios con discapacidad visual o motriz, y para rescatistas operando en condiciones adversas en la vía pública.
 
+---
+
+## [ADR-016] · [2026-10-22 22:40] Auditoría Integral de Archivos TSX, Resolución de Callejones sin Salida y Erradicación de Enlaces Rotos
+
+- **Estado**: Aceptado
+- **Contexto**:
+  Una auditoría exhaustiva de todos los archivos `.tsx` del proyecto reveló varias partes no funcionales o callejones sin salida:
+  1. Enlaces ancla en Footer (`/#mapa`, `/#eventos`) y Navbar (`/#eventos`) que no correspondían a ningún `id` en la página principal (`/`), provocando saltos vacíos al inicio.
+  2. La campana de notificaciones del Navbar solo alternaba un booleano sin desplegar ningún panel o contenido informativo.
+  3. El contador del carrito en la Tienda Solidaria (`/tienda`) era un elemento estático no clickeable, impidiendo ver los artículos o confirmar el pedido solidario.
+  4. Los botones de "¿Olvidaste tu contraseña?" y login social (Google/Facebook) en `/login` y `/registro` ejecutaban llamadas intrusivas a `alert()` del navegador.
+  5. En `ToggleSwitch.tsx`, un evento de clic en el `div` contenedor causaba colisión con el evento sintético del `label htmlFor`.
+  6. No existía una página 404 personalizada (`src/app/not-found.tsx`), mostrando la pantalla genérica en inglés de Next.js ante rutas inválidas o mascotas inexistentes.
+- **Decisión**:
+  1. **Secciones Funcionales `#mapa` y `#eventos`**:
+     - Se crearon las secciones con `id="mapa"` (Monitoreo territorial por barrios de Río Cuarto: Banda Norte, Centro, Alberdi, Parque Sarmiento) y con `id="eventos"` (Agenda solidaria con próximas jornadas de castración, colectas y paseos) en `src/app/page.tsx`.
+  2. **Panel de Alertas en Navbar**:
+     - Se convirtió la campana en un popover interactivo accesible con alertas comunitarias en vivo de Río Cuarto y opción de marcar como leídas.
+  3. **Carrito y Checkout Solidario en `/tienda`**:
+     - Se implementó un modal completo de carrito de compras que gestiona cantidades (+/-), vaciado y confirmación de pedido solidario mediante `SuccessModal`.
+  4. **Página 404 Empática**:
+     - Creación de `src/app/not-found.tsx` con tono empático argentino e integración con `notFound()` en `/adopciones/[id]`.
+  5. **Erradicación de `alert()`**:
+     - Reemplazo total por modales accesibles `SuccessModal` informativos.
+- **Consecuencias**:
+  - Cero callejones sin salida en los flujos principales de navegación.
+  - Experiencia 100% interactiva, coherente y funcional en todas las rutas y componentes.
+
+
 
 
 

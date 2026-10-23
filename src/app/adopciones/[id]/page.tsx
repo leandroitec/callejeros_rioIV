@@ -25,7 +25,11 @@ export default function PetDetailPage() {
   const params = useParams();
   const id = params?.id as string;
 
-  const pet = INITIAL_PETS.find((p) => p.id === id) ?? INITIAL_PETS[0];
+  const pet = INITIAL_PETS.find((p) => p.id === id);
+
+  if (!pet) {
+    notFound();
+  }
 
   const [isFavorite, setIsFavorite] = useState(pet.isFavorite ?? false);
   const [isAdoptModalOpen, setIsAdoptModalOpen] = useState(false);

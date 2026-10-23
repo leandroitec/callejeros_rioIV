@@ -35,11 +35,15 @@ export function Navbar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [hasNotifications, setHasNotifications] = useState(true);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   useEffect(() => {
-    // Escuchar tecla escape para cerrar el menú lateral
+    // Escuchar tecla escape para cerrar el menú lateral y notificaciones
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsDrawerOpen(false);
+      if (e.key === 'Escape') {
+        setIsDrawerOpen(false);
+        setIsNotificationOpen(false);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -133,26 +137,112 @@ export function Navbar() {
               )}
             </button>
 
-            {/* Campana de Notificaciones con etiqueta visible en desktop */}
-            <button
-              type="button"
-              onClick={() => setHasNotifications(!hasNotifications)}
-              className="relative p-2.5 sm:px-3.5 sm:py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 transition-all duration-300 ease-in-out min-w-[48px] min-h-[48px] flex items-center justify-center gap-2 active:scale-95"
-              aria-label="Ver alertas de mascotas y avisos comunitarios de Río Cuarto"
-            >
-              <div className="relative">
-                <Bell className="w-5 h-5 text-slate-700 dark:text-slate-200" aria-hidden="true" />
-                {hasNotifications && (
-                  <span
-                    className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-orange-600 rounded-full ring-2 ring-white dark:ring-slate-900 animate-pulse"
-                    aria-hidden="true"
-                  />
-                )}
-              </div>
-              <span className="hidden lg:inline text-xs font-bold text-slate-800 dark:text-slate-200">
-                Alertas
-              </span>
-            </button>
+            {/* Campana de Notificaciones con Popover Interactivo */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                className="relative p-2.5 sm:px-3.5 sm:py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 transition-all duration-300 ease-in-out min-w-[48px] min-h-[48px] flex items-center justify-center gap-2 active:scale-95"
+                aria-label="Ver alertas de mascotas y avisos comunitarios de Río Cuarto"
+                aria-expanded={isNotificationOpen}
+              >
+                <div className="relative">
+                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-200" aria-hidden="true" />
+                  {hasNotifications && (
+                    <span
+                      className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-orange-600 rounded-full ring-2 ring-white dark:ring-slate-900 animate-pulse"
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
+                <span className="hidden lg:inline text-xs font-bold text-slate-800 dark:text-slate-200">
+                  Alertas
+                </span>
+              </button>
+
+              {/* Popover flotante de Alertas */}
+              {isNotificationOpen && (
+                <div
+                  role="region"
+                  aria-label="Alertas comunitarias en vivo"
+                  className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+                >
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+                    <h3 className="font-heading font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                      <Bell className="w-4 h-4 text-orange-600" />
+                      <span>Alertas de Río Cuarto</span>
+                    </h3>
+                    <span className="text-[11px] font-bold bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 px-2 py-0.5 rounded-full">
+                      En vivo
+                    </span>
+                  </div>
+
+                  <div className="py-2 divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+                    <Link
+                      href="/reportar-extravio"
+                      onClick={() => setIsNotificationOpen(false)}
+                      className="block py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 rounded-xl px-2 transition-colors"
+                    >
+                      <div className="flex items-center gap-2 text-red-600 font-bold mb-0.5">
+                        <AlertTriangle className="w-3.5 h-3.5" />
+                        <span>Mascota Perdida (Plaza Roca)</span>
+                      </div>
+                      <p className="text-slate-600 dark:text-slate-300">
+                        Perro mestizo mediano con collar rojo visto hace 25 min en inmediaciones del centro.
+                      </p>
+                    </Link>
+
+                    <Link
+                      href="/adopcion-responsable"
+                      onClick={() => setIsNotificationOpen(false)}
+                      className="block py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 rounded-xl px-2 transition-colors"
+                    >
+                      <div className="flex items-center gap-2 text-emerald-600 font-bold mb-0.5">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        <span>Campaña Gratuita en Alberdi</span>
+                      </div>
+                      <p className="text-slate-600 dark:text-slate-300">
+                        Turnos de castración y vacunación antirrábica abiertos para este sábado.
+                      </p>
+                    </Link>
+
+                    <Link
+                      href="/padrinos"
+                      onClick={() => setIsNotificationOpen(false)}
+                      className="block py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 rounded-xl px-2 transition-colors"
+                    >
+                      <div className="flex items-center gap-2 text-cyan-600 font-bold mb-0.5">
+                        <Heart className="w-3.5 h-3.5" />
+                        <span>Caso Urgente: Cthulhu</span>
+                      </div>
+                      <p className="text-slate-600 dark:text-slate-300">
+                        Inició tratamiento traumatológico y necesita madrina/padrino para medicamentos.
+                      </p>
+                    </Link>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setHasNotifications(false);
+                        setIsNotificationOpen(false);
+                      }}
+                      className="text-[11px] font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors"
+                    >
+                      Marcar leídas
+                    </button>
+                    <Link
+                      href="/reportar-extravio"
+                      onClick={() => setIsNotificationOpen(false)}
+                      className="text-[11px] font-bold text-orange-600 dark:text-orange-400 hover:underline"
+                    >
+                      Ver reportes →
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Botón Login/Perfil */}
             <Link

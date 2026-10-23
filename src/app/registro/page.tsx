@@ -18,6 +18,7 @@ export default function RegisterPage() {
   const [errors, setErrors] = useState<{ fullName?: string; email?: string; password?: string }>({});
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [noticeModal, setNoticeModal] = useState<{ title: string; message: string } | null>(null);
 
   const validateFullName = (val: string) => {
     if (!val.trim()) return 'El nombre completo es obligatorio.';
@@ -312,14 +313,24 @@ export default function RegisterPage() {
         <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => alert('Registro con Google en desarrollo')}
+            onClick={() =>
+              setNoticeModal({
+                title: 'Registro con Google',
+                message: 'El registro con cuenta de Google se habilitará próximamente. Por favor completá el formulario directo con tu nombre y correo.',
+              })
+            }
             className="py-3 px-4 rounded-2xl bg-slate-100 dark:bg-slate-700/60 hover:bg-slate-200 dark:hover:bg-slate-700 font-heading font-bold text-xs uppercase tracking-wider text-slate-800 dark:text-slate-200 shadow-xs transition-all min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900"
           >
             GOOGLE
           </button>
           <button
             type="button"
-            onClick={() => alert('Registro con Facebook en desarrollo')}
+            onClick={() =>
+              setNoticeModal({
+                title: 'Registro con Facebook',
+                message: 'La vinculación con Facebook estará disponible en la próxima actualización. Por favor completá el formulario directo con tu nombre y correo.',
+              })
+            }
             className="py-3 px-4 rounded-2xl bg-slate-100 dark:bg-slate-700/60 hover:bg-slate-200 dark:hover:bg-slate-700 font-heading font-bold text-xs uppercase tracking-wider text-slate-800 dark:text-slate-200 shadow-xs transition-all min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cyan-600 dark:focus-visible:ring-offset-slate-900"
           >
             FACEBOOK
@@ -338,6 +349,17 @@ export default function RegisterPage() {
         message="Tu cuenta fue creada exitosamente. Ya podés postularte para adoptar, seguir tus reportes y sumarte como voluntario o padrino."
         actionText="Ir al Inicio"
         actionHref="/"
+        variant="orange"
+      />
+
+      {/* Modal de Aviso Informativo */}
+      <SuccessModal
+        isOpen={!!noticeModal}
+        onClose={() => setNoticeModal(null)}
+        title={noticeModal?.title || ''}
+        message={noticeModal?.message || ''}
+        actionText="Entendido"
+        actionHref="/registro"
         variant="orange"
       />
     </section>

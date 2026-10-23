@@ -3,28 +3,38 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingBag, ChevronLeft, Check, Plus, Heart } from 'lucide-react';
+import { ShoppingBag, ChevronLeft, Plus, Minus, Trash2, X, Check, Heart } from 'lucide-react';
 import { SuccessModal } from '@/components/organisms/SuccessModal';
 import { Breadcrumbs } from '@/components/atoms/Breadcrumbs';
+import { Button } from '@/components/atoms/Button';
 
 interface Product {
   id: string;
   name: string;
+  priceNum: number;
   price: string;
   category: string;
   description: string;
   imageUrl: string;
 }
 
+interface CartItem {
+  product: Product;
+  quantity: number;
+}
+
 export default function TiendaPage() {
-  const [cartCount, setCartCount] = useState(0);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isCheckoutSuccessOpen, setIsCheckoutSuccessOpen] = useState(false);
   const [lastAddedProduct, setLastAddedProduct] = useState('');
 
   const products: Product[] = [
     {
       id: 'prod-1',
       name: 'Chapita Identificatoria con QR',
+      priceNum: 4500,
       price: '$4.500',
       category: 'Seguridad',
       description: 'Acero inoxidable grabado con código QR que abre la ficha de tu mascota al escanearse.',
@@ -33,6 +43,7 @@ export default function TiendaPage() {
     {
       id: 'prod-2',
       name: 'Correa Reflectiva de Paseo',
+      priceNum: 8200,
       price: '$8.200',
       category: 'Paseo',
       description: 'Cinta reforzada de 2 metros con costuras reflectivas para paseos nocturnos seguros.',
@@ -41,6 +52,7 @@ export default function TiendaPage() {
     {
       id: 'prod-3',
       name: 'Remera Oficial Callejeros Río IV',
+      priceNum: 14000,
       price: '$14.000',
       category: 'Merchandising',
       description: 'Algodón peinado premium 100% con ilustración serigráfica de perro y gato en corazón.',
@@ -49,6 +61,7 @@ export default function TiendaPage() {
     {
       id: 'prod-4',
       name: 'Colchón Térmico Antidesgarro',
+      priceNum: 18500,
       price: '$18.500',
       category: 'Descanso',
       description: 'Funda impermeable lavable y relleno de vellón siliconado de alta densidad.',
@@ -56,10 +69,45 @@ export default function TiendaPage() {
     },
   ];
 
-  const handleAddToCart = (productName: string) => {
-    setCartCount(cartCount + 1);
-    setLastAddedProduct(productName);
+  const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const totalCartPrice = cartItems.reduce((acc, item) => acc + item.product.priceNum * item.quantity, 0);
+
+  const handleAddToCart = (product: Product) => {
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.product.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prev, { product, quantity: 1 }];
+    });
+    setLastAddedProduct(product.name);
     setIsSuccessModalOpen(true);
+  };
+
+  const updateQuantity = (productId: string, delta: number) => {
+    setCartItems((prev) =>
+      prev
+        .map((item) => {
+          if (item.product.id === productId) {
+            const newQty = item.quantity + delta;
+            return newQty > 0 ? { ...item, quantity: newQty } : null;
+          }
+          return item;
+        })
+        .filter(Boolean) as CartItem[]
+    );
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCartItems((prev) => prev.filter((item) => item.product.id !== productId));
+  };
+
+  const handleCheckout = () => {
+    setIsCartModalOpen(false);
+    setIsCheckoutSuccessOpen(true);
+    setCartItems([]);
   };
 
   return (
@@ -93,13 +141,25 @@ export default function TiendaPage() {
           </div>
         </div>
 
-        {/* Carrito de compras (Modelo Mental: Ícono Universal + Etiqueta Explícita) */}
-        <div className="relative p-3 px-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-2">
-          <ShoppingBag className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+        {/* Carrito de compras Interactivo (Botón accesible con badge) */}
+        <button
+          type="button"
+          onClick={() => setIsCartModalOpen(true)}
+          className="relative p-3 px-4 rounded-2xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-2.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-500 min-h-[48px] active:scale-95"
+          aria-label={`Ver carrito solidario con ${totalCartCount} artículos`}
+        >
+          <div className="relative">
+            <ShoppingBag className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+            {totalCartCount > 0 && (
+              <span className="absolute -top-1.5 -right-2 bg-orange-600 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">
+                {totalCartCount}
+              </span>
+            )}
+          </div>
           <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
-            Carrito: {cartCount} {cartCount === 1 ? 'artículo' : 'artículos'}
+            Carrito ({totalCartCount})
           </span>
-        </div>
+        </button>
       </div>
 
       {/* Banner */}
@@ -149,7 +209,7 @@ export default function TiendaPage() {
 
               <button
                 type="button"
-                onClick={() => handleAddToCart(product.name)}
+                onClick={() => handleAddToCart(product)}
                 className="w-full btn-primary min-h-[48px] text-xs font-heading font-bold gap-1.5"
               >
                 <Plus className="w-4 h-4" />
@@ -160,12 +220,147 @@ export default function TiendaPage() {
         ))}
       </div>
 
+      {/* MODAL DEL CARRITO SOLIDARIO INTERACTIVO */}
+      {isCartModalOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cart-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+        >
+          <div className="w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-5 animate-in slide-in-from-bottom duration-300">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <ShoppingBag className="w-5 h-5 text-orange-600" />
+                <h2 id="cart-title" className="font-heading font-extrabold text-lg text-slate-900 dark:text-white">
+                  Carrito Solidario
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsCartModalOpen(false)}
+                className="p-2 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Cerrar carrito"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {cartItems.length === 0 ? (
+              <div className="text-center py-8 space-y-3">
+                <div className="w-14 h-14 bg-orange-100 dark:bg-orange-950/60 rounded-full flex items-center justify-center mx-auto text-orange-600">
+                  <ShoppingBag className="w-7 h-7" />
+                </div>
+                <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  Tu carrito solidario todavía está vacío
+                </p>
+                <p className="text-xs text-slate-500 max-w-xs mx-auto">
+                  Agregá productos como chapitas, correas o remeras para colaborar con los rescates en Río Cuarto.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4 max-h-72 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 pr-1">
+                {cartItems.map((item) => (
+                  <div key={item.product.id} className="pt-3 first:pt-0 flex items-center justify-between gap-3">
+                    <div className="flex-1">
+                      <h4 className="font-heading font-bold text-sm text-slate-900 dark:text-white">
+                        {item.product.name}
+                      </h4>
+                      <span className="text-xs text-orange-600 dark:text-orange-400 font-bold">
+                        ${(item.product.priceNum * item.quantity).toLocaleString('es-AR')}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center border border-slate-300 dark:border-slate-700 rounded-xl overflow-hidden">
+                        <button
+                          type="button"
+                          onClick={() => updateQuantity(item.product.id, -1)}
+                          className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                          aria-label={`Restar una unidad de ${item.product.name}`}
+                        >
+                          <Minus className="w-3.5 h-3.5" />
+                        </button>
+                        <span className="px-2.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+                          {item.quantity}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => updateQuantity(item.product.id, 1)}
+                          className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                          aria-label={`Sumar una unidad de ${item.product.name}`}
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => removeFromCart(item.product.id)}
+                        className="p-2 text-slate-400 hover:text-red-600 transition-colors"
+                        aria-label={`Eliminar ${item.product.name} del carrito`}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {cartItems.length > 0 && (
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-3">
+                <div className="flex items-center justify-between text-base font-extrabold text-slate-900 dark:text-white">
+                  <span>Total Solidario:</span>
+                  <span className="text-xl text-orange-600 dark:text-orange-400 font-heading">
+                    ${totalCartPrice.toLocaleString('es-AR')}
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-500 leading-tight">
+                  Coordinamos el pago (transferencia o efectivo) y entrega en punto céntrico de Río Cuarto o envío a domicilio.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-2 pt-2">
+                  <Button
+                    variant="primary"
+                    size="md"
+                    onClick={handleCheckout}
+                    className="flex-1 uppercase tracking-wider text-xs"
+                  >
+                    Confirmar Pedido Solidario
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCartItems([])}
+                    className="text-xs"
+                  >
+                    Vaciar
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Modal de agregado al carrito */}
       <SuccessModal
         isOpen={isSuccessModalOpen}
         onClose={() => setIsSuccessModalOpen(false)}
         title="¡Producto agregado al carrito!"
         message={`"${lastAddedProduct}" fue añadido al carrito solidario. ¡Gracias por colaborar con los animales de Río Cuarto!`}
-        actionText="Seguir Comprando"
+        actionText="Ver Mi Carrito"
+        actionHref="#cart"
+      />
+
+      {/* Modal de confirmación de pedido finalizado */}
+      <SuccessModal
+        isOpen={isCheckoutSuccessOpen}
+        onClose={() => setIsCheckoutSuccessOpen(false)}
+        title="¡Muchas gracias por tu compra solidaria!"
+        message="Registramos tu pedido con éxito. Nuestro equipo voluntario te contactará por WhatsApp en las próximas horas para coordinar el retiro o envío en Río Cuarto."
+        actionText="Volver a la Tienda"
         actionHref="/tienda"
       />
     </div>
