@@ -17,9 +17,9 @@ import {
   Check,
 } from 'lucide-react';
 import { INITIAL_PETS } from '@/data/mockPets';
-import { AccordionItem } from '@/components/ui/Accordion';
-import { SuccessModal } from '@/components/modals/SuccessModal';
-import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import { AccordionItem } from '@/components/molecules/Accordion';
+import { SuccessModal } from '@/components/organisms/SuccessModal';
+import { Breadcrumbs } from '@/components/atoms/Breadcrumbs';
 
 export default function PetDetailPage() {
   const params = useParams();

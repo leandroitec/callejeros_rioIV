@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, Mail, Lock, Eye, EyeOff, LogIn, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { SuccessModal } from '@/components/modals/SuccessModal';
-import { Button } from '@/components/ui/Button';
+import { SuccessModal } from '@/components/organisms/SuccessModal';
+import { Button } from '@/components/atoms/Button';
 
 export default function LoginPage() {
   const router = useRouter();

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ShieldCheck, Home, Calendar, Stethoscope, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import { Breadcrumbs } from '@/components/atoms/Breadcrumbs';
 
 export default function AdopcionResponsablePage() {
   return (

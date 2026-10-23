@@ -142,4 +142,44 @@ Todo botón, enlace de acción, input o tarjeta clickable debe implementar oblig
      - **Cómo Ayudar**: Sostén solidario (Tienda, Padrinos y Donaciones).
      - **Nosotros y Comunidad**: Educación, identidad del refugio y eventos.
 
+---
+
+## 8. Sistemas de Diseño, Diseño Atómico y Microinteracciones (Clase 9)
+
+### Jerarquía de Componentes (Atomic Design)
+
+1. **`/src/components/atoms/` (Átomos)**:
+   - Componentes indivisibles que encapsulan estilos base, tokens y accesibilidad elemental:
+     - `Button.tsx`: Botón con 5 estados vivos (`default`, `hover`, `active`, `focus-visible`, `disabled`/`loading`).
+     - `Input.tsx`: Input con touch target ergonómico, bordes de alto contraste (`border-2 border-slate-400`), slots de iconos y mensaje de error accesible.
+     - `Label.tsx`: Etiqueta modular uppercase con indicador de obligatoriedad.
+     - `Badge.tsx`: Badges semánticos para estados de mascotas (`urgent`, `warning`, `success`, `neutral`).
+     - `ToggleSwitch.tsx`: Switch con Smart Animate de Figma, sombra interna y traslación a 300ms.
+     - `Breadcrumbs.tsx`: Rastro de migas de pan con marcado semántico y separadores visuales.
+
+2. **`/src/components/molecules/` (Moléculas)**:
+   - Combinaciones de átomos que forman unidades funcionales reutilizables:
+     - `PetCard.tsx`: Tarjeta de animal que consume `Badge` y `Button` con elevación física.
+     - `SearchBar.tsx`: Barra de búsqueda que consume `Input` con lupa y botón de borrado inmediato.
+     - `Accordion.tsx`: Ítem desplegable con rotación fluida de Chevron a 300ms.
+
+3. **`/src/components/organisms/` (Organismos)**:
+   - Estructuras complejas compuestas por moléculas y átomos:
+     - `Navbar.tsx`: Barra superior con Drawer móvil y navegación adaptable.
+     - `Footer.tsx`: Pie de página integral con redes, información y contacto local.
+     - `PetGrid.tsx`: Grilla de adopciones que consume `PetCard` y gestiona Empty States.
+     - `FilterModal.tsx`: Modal que consume `SearchBar`, `ToggleSwitch` y `Button`.
+     - `SuccessModal.tsx`: Diálogo de confirmación emocional con icono animado y acción principal.
+
+### Convenciones de Microinteracciones y Transiciones
+
+- **Regla de 300ms**: Toda animación o transición de interfaz utiliza `transition-all duration-300 ease-in-out` para garantizar una respuesta orgánica y fluida.
+- **Respuesta Háptica (`active:scale-95`)**: Todo botón o control interactivo se contrae sutilmente al ser presionado, transmitiendo sensación física de pulsación.
+- **Elevación Física (`hover:-translate-y-1 hover:shadow-xl`)**: Las tarjetas de contenido se elevan sutilmente al pasar el cursor o recibir foco.
+- **Efecto Dissolve (Fade-in)**: Mensajes de error en formularios y toasts utilizan `animate-in fade-in duration-300 ease-out` para evitar apariciones bruscas.
+- **Efecto Slide in/out**:
+  - Drawer móvil: `transition-transform duration-300 ease-in-out` (`translate-x-full` -> `translate-x-0`).
+  - Modales: `animate-in fade-in slide-in-from-bottom duration-300 ease-out`.
+
+
 

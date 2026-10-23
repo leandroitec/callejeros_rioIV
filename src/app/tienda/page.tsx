@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ShoppingBag, ChevronLeft, Check, Plus, Heart } from 'lucide-react';
-import { SuccessModal } from '@/components/modals/SuccessModal';
-import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import { SuccessModal } from '@/components/organisms/SuccessModal';
+import { Breadcrumbs } from '@/components/atoms/Breadcrumbs';
 
 interface Product {
   id: string;

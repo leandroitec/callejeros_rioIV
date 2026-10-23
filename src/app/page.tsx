@@ -15,7 +15,7 @@ import {
   Users,
 } from 'lucide-react';
 import { INITIAL_PETS } from '@/data/mockPets';
-import { PetCard } from '@/components/cards/PetCard';
+import { PetCard } from '@/components/molecules/PetCard';
 
 export default function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0);

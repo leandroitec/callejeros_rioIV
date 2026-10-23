@@ -13,8 +13,8 @@ import {
   AlertCircle,
   X,
 } from 'lucide-react';
-import { SuccessModal } from '@/components/modals/SuccessModal';
-import { Button } from '@/components/ui/Button';
+import { SuccessModal } from '@/components/organisms/SuccessModal';
+import { Button } from '@/components/atoms/Button';
 
 export default function ReportarExtravioPage() {
   const [reportType, setReportType] = useState<'EXTRAVIO' | 'AVISTAMIENTO'>('EXTRAVIO');
@@ -54,26 +54,26 @@ export default function ReportarExtravioPage() {
   ];
 
   const validatePetName = (val: string) => {
-    if (!val.trim()) return 'El nombre o referencia del animal es obligatorio.';
-    if (val.trim().length < 2) return 'Ingresá al menos 2 caracteres.';
+    if (!val.trim()) return 'Contanos cómo se llama la mascota o describila brevemente (ej: Manchita, o Mestizo marrón con collar rojo).';
+    if (val.trim().length < 2) return 'Escribí al menos 2 letras para que podamos identificarlo.';
     return undefined;
   };
 
   const validateNeighborhood = (val: string) => {
-    if (!val.trim()) return 'Por favor, seleccioná el barrio de Río Cuarto donde ocurrió.';
+    if (!val.trim()) return 'Elegí el barrio o zona de Río Cuarto donde se perdió o fue visto el animal.';
     return undefined;
   };
 
   const validateContactPhone = (val: string) => {
-    if (!val.trim()) return 'El teléfono de contacto es obligatorio.';
+    if (!val.trim()) return 'El teléfono es indispensable para que los vecinos te contacten al instante si lo ven.';
     const digitsOnly = val.replace(/\D/g, '');
-    if (digitsOnly.length < 7) return 'Ingresá un número de teléfono válido (ej: 358 154 123456).';
+    if (digitsOnly.length < 7) return 'El número debe incluir código de área sin 0 ni 15 para contactarte por WhatsApp (ej: 3584123456).';
     return undefined;
   };
 
   const validateDescription = (val: string) => {
-    if (!val.trim()) return 'La descripción es obligatoria.';
-    if (val.trim().length < 10) return 'Por favor detallá al menos 10 caracteres (color, collar, etc.).';
+    if (!val.trim()) return 'Detallá rasgos particulares para facilitar su reconocimiento por la comunidad.';
+    if (val.trim().length < 10) return 'Escribí al menos 10 caracteres describiendo su tamaño, pelaje, collar o comportamiento.';
     return undefined;
   };
 
@@ -177,8 +177,9 @@ export default function ReportarExtravioPage() {
         className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-neutral-200 dark:border-slate-700 shadow-sm space-y-6"
       >
         {/* Selector de Tipo de Reporte (Touch Target Gigante h-14 / min-h-[56px]) */}
+        {/* Selector de Tipo de Situación */}
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-2">
             Tipo de Situación
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -193,7 +194,7 @@ export default function ReportarExtravioPage() {
               }`}
               aria-pressed={reportType === 'EXTRAVIO'}
             >
-              <span>🚨 Perdí mi Mascota</span>
+              <span>🚨 Perdí a mi Mascota</span>
             </button>
 
             <button
@@ -212,26 +213,26 @@ export default function ReportarExtravioPage() {
           </div>
         </div>
 
-        {/* Carga de Imagen con Foco Nuclear DCU (Elemento visualmente más grande del formulario para el Rescatista Ocasional) */}
+        {/* Carga de Imagen con Foco Nuclear DCU */}
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
               <span>Foto del Animal</span>
-              <span className="text-orange-600 dark:text-orange-400 font-bold">(Dato más crucial)</span>
+              <span className="text-orange-700 dark:text-orange-400 font-bold">(Dato más importante)</span>
             </label>
             {imagePreview && (
-              <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-700">
-                ✓ Foto cargada
+              <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-700">
+                ✓ Foto cargada correctamente
               </span>
             )}
           </div>
 
           {imagePreview ? (
-            /* Previsualización que reemplaza exactamente el contenedor de subida (Mapeo Natural 1:1) */
+            /* Previsualización que reemplaza exactamente el contenedor de subida */
             <div className="relative w-full h-72 sm:h-84 rounded-3xl overflow-hidden border-3 border-orange-500 shadow-lg group">
               <img
                 src={imagePreview}
-                alt="Vista previa de la foto del animal extraviado"
+                alt="Vista previa de la foto del animal extraviado cargada por el usuario"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 flex items-end justify-between p-4 sm:p-6">
@@ -239,7 +240,7 @@ export default function ReportarExtravioPage() {
                   htmlFor="pet-image"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white text-slate-900 text-sm font-extrabold shadow-lg cursor-pointer hover:bg-slate-100 hover:scale-105 transition-all min-h-[52px] focus-within:ring-2 focus-within:ring-orange-500"
                 >
-                  <Camera className="w-5 h-5 text-orange-600" />
+                  <Camera className="w-5 h-5 text-orange-600" aria-hidden="true" />
                   <span>Cambiar Foto</span>
                   <input
                     id="pet-image"
@@ -249,6 +250,7 @@ export default function ReportarExtravioPage() {
                     disabled={isSubmitting}
                     onChange={handleImageChange}
                     className="sr-only"
+                    aria-label="Seleccionar otra fotografía del animal"
                   />
                 </label>
                 <button
@@ -256,29 +258,29 @@ export default function ReportarExtravioPage() {
                   disabled={isSubmitting}
                   onClick={() => setImagePreview(null)}
                   className="inline-flex items-center gap-1.5 px-5 py-3 rounded-2xl bg-red-600 hover:bg-red-700 text-white text-sm font-extrabold shadow-lg transition-all hover:scale-105 min-h-[52px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 disabled:opacity-50"
-                  aria-label="Quitar foto seleccionada"
+                  aria-label="Quitar fotografía seleccionada"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5" aria-hidden="true" />
                   <span>Quitar</span>
                 </button>
               </div>
             </div>
           ) : (
-            /* Área inicial de carga: elemento visualmente más grande del formulario para uso rápido con una sola mano bajo el sol */
+            /* Área inicial de carga */
             <label
               htmlFor="pet-image"
               className="relative flex flex-col items-center justify-center p-8 sm:p-12 min-h-[290px] sm:min-h-[330px] border-3 border-dashed border-orange-400 dark:border-orange-500 bg-orange-50/70 dark:bg-orange-950/25 hover:bg-orange-100/70 dark:hover:bg-orange-950/40 rounded-3xl cursor-pointer transition-all group focus-within:ring-4 focus-within:ring-orange-500 active:scale-[0.99] text-center"
             >
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-orange-500 text-white shadow-xl shadow-orange-500/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <Camera className="w-10 h-10 sm:w-12 sm:h-12" />
+                <Camera className="w-10 h-10 sm:w-12 sm:h-12" aria-hidden="true" />
               </div>
               <span className="block text-lg sm:text-xl font-heading font-extrabold text-slate-900 dark:text-white">
-                TOCÁ ACÁ PARA TOMAR FOTO O SUBIR
+                Tomá una foto o subí una desde tu galería
               </span>
-              <span className="block text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium max-w-sm mt-1.5 leading-relaxed">
-                La foto es el dato más crucial para que la comunidad de Río Cuarto reconozca al animal al instante.
+              <span className="block text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium max-w-sm mt-1.5 leading-relaxed">
+                La foto es el dato más importante para que los vecinos de Río Cuarto reconozcan al animal al instante.
               </span>
-              <div className="mt-3 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-orange-200/90 dark:bg-orange-900/60 text-orange-900 dark:text-orange-100 text-xs font-bold">
+              <div className="mt-3 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-orange-200/90 dark:bg-orange-900/60 text-orange-950 dark:text-orange-100 text-xs font-bold">
                 <span>📸 Cámara directa o galería</span>
               </div>
               <input
@@ -289,6 +291,7 @@ export default function ReportarExtravioPage() {
                 disabled={isSubmitting}
                 onChange={handleImageChange}
                 className="sr-only"
+                aria-label="Tomar una fotografía o cargar imagen del animal"
               />
             </label>
           )}
@@ -330,7 +333,7 @@ export default function ReportarExtravioPage() {
             />
           </div>
           {touched.petName && errors.petName && (
-            <p id="pet-name-error" role="alert" className="text-xs font-semibold text-red-600 dark:text-red-400 mt-1 flex items-center gap-1.5">
+            <p id="pet-name-error" role="alert" className="text-xs font-semibold text-red-600 dark:text-red-400 mt-1 flex items-center gap-1.5 animate-in fade-in duration-300 ease-out">
               <AlertCircle className="w-3.5 h-3.5 shrink-0" />
               <span>{errors.petName}</span>
             </p>
@@ -381,7 +384,7 @@ export default function ReportarExtravioPage() {
             <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
           </div>
           {touched.neighborhood && errors.neighborhood && (
-            <p id="neighborhood-error" role="alert" className="text-xs font-semibold text-red-600 dark:text-red-400 mt-1 flex items-center gap-1.5">
+            <p id="neighborhood-error" role="alert" className="text-xs font-semibold text-red-600 dark:text-red-400 mt-1 flex items-center gap-1.5 animate-in fade-in duration-300 ease-out">
               <AlertCircle className="w-3.5 h-3.5 shrink-0" />
               <span>{errors.neighborhood}</span>
             </p>
@@ -425,7 +428,7 @@ export default function ReportarExtravioPage() {
             />
           </div>
           {touched.contactPhone && errors.contactPhone && (
-            <p id="contact-phone-error" role="alert" className="text-xs font-semibold text-red-600 dark:text-red-400 mt-1 flex items-center gap-1.5">
+            <p id="contact-phone-error" role="alert" className="text-xs font-semibold text-red-600 dark:text-red-400 mt-1 flex items-center gap-1.5 animate-in fade-in duration-300 ease-out">
               <AlertCircle className="w-3.5 h-3.5 shrink-0" />
               <span>{errors.contactPhone}</span>
             </p>
@@ -465,44 +468,44 @@ export default function ReportarExtravioPage() {
             }`}
           />
           {touched.description && errors.description && (
-            <p id="description-error" role="alert" className="text-xs font-semibold text-red-600 dark:text-red-400 mt-1 flex items-center gap-1.5">
+            <p id="description-error" role="alert" className="text-xs font-semibold text-red-600 dark:text-red-400 mt-1 flex items-center gap-1.5 animate-in fade-in duration-300 ease-out">
               <AlertCircle className="w-3.5 h-3.5 shrink-0" />
               <span>{errors.description}</span>
             </p>
           )}
         </div>
 
-        {/* Botón de Envío y Botón Cancelar (Prevención de Errores DCU / Problema del Alien) */}
+        {/* Botón de Envío y Botón Cancelar */}
         <div className="space-y-4 pt-2">
           <Button
             type="submit"
             variant="primary"
             size="lg"
             isLoading={isSubmitting}
-            loadingText="Publicando reporte en Río Cuarto..."
+            loadingText="Publicando alerta comunitaria en Río Cuarto..."
             className="w-full text-base sm:text-lg uppercase tracking-wider"
           >
-            Publicar Reporte de Extravío
+            Publicar Alerta Comunitaria Ahora
           </Button>
 
-          {/* Botón Secundario Ghost (Separado para evitar toques accidentales con una sola mano) */}
+          {/* Botón Secundario Ghost */}
           <div className="text-center">
             <Link
               href="/"
-              className="inline-flex items-center justify-center text-sm font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700/60 rounded-2xl px-6 py-3 transition-colors min-h-[52px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+              className="inline-flex items-center justify-center text-sm font-semibold text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700/60 rounded-2xl px-6 py-3 transition-colors min-h-[52px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
             >
-              Cancelar y volver al inicio
+              Descartar y volver al inicio
             </Link>
           </div>
         </div>
       </form>
 
-      {/* MODAL DE ÉXITO SUPERPUESTO (Figma: Modal de Confirmación) */}
+      {/* MODAL DE ÉXITO SUPERPUESTO CON MENSAJE CÁLIDO */}
       <SuccessModal
         isOpen={isSuccessModalOpen}
         onClose={() => setIsSuccessModalOpen(false)}
-        title="¡Reporte publicado con éxito!"
-        message="Reporte publicado con éxito. ¡Gracias por ayudar a los callejeritos de Río Cuarto! Ya se encuentra visible para toda la comunidad."
+        title="¡Muchas gracias por involucrarte!"
+        message="Tu reporte ya fue publicado en la red comunitaria de Río Cuarto. Los vecinos y rescatistas de la zona recibirán el aviso para ayudar a encontrarlo cuanto antes."
         actionText="Ver Catálogo de Adopciones"
         actionHref="/adopciones"
       />

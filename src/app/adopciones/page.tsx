@@ -4,9 +4,9 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { SlidersHorizontal, Search, RefreshCw, PawPrint, Sparkles, ChevronLeft } from 'lucide-react';
 import { INITIAL_PETS, PetData } from '@/data/mockPets';
-import { PetCard } from '@/components/cards/PetCard';
-import { FilterModal, FilterState } from '@/components/modals/FilterModal';
-import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import { PetGrid } from '@/components/organisms/PetGrid';
+import { FilterModal, FilterState } from '@/components/organisms/FilterModal';
+import { Breadcrumbs } from '@/components/atoms/Breadcrumbs';
 
 export default function AdopcionesPage() {
   const [selectedSpecies, setSelectedSpecies] = useState<'TODOS' | 'PERRO' | 'GATO'>('PERRO');
@@ -197,46 +197,23 @@ export default function AdopcionesPage() {
         )}
       </div>
 
-      {/* 3. GRILLA DE MASCOTAS (Figma: 1-2 col móvil / 3-4 col desktop) */}
-      {filteredPets.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredPets.map((pet) => (
-            <PetCard key={pet.id} pet={pet} />
-          ))}
-        </div>
-      ) : (
-        /* Empty State Accesible */
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-12 text-center border border-neutral-200 dark:border-slate-700 max-w-md mx-auto space-y-4 shadow-sm">
-          <div className="w-16 h-16 rounded-full bg-orange-100 dark:bg-orange-950/60 text-orange-600 dark:text-orange-400 flex items-center justify-center mx-auto">
-            <PawPrint className="w-8 h-8" />
-          </div>
-          <h3 className="font-heading font-bold text-xl text-slate-900 dark:text-white">
-            No encontramos mascotas con estos filtros
-          </h3>
-          <p className="text-sm text-slate-600 dark:text-slate-300">
-            Probá quitando algunos filtros o ampliando la búsqueda para ver más animalitos que buscan hogar.
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedSpecies('TODOS');
-              setFilters({
-                search: '',
-                age0to1: false,
-                age1to3: false,
-                ageOver3: false,
-                onlyFavorites: false,
-                sociable: false,
-                castrated: false,
-                sex: 'TODOS',
-              });
-            }}
-            className="btn-primary"
-          >
-            Ver todas las mascotas
-          </button>
-        </div>
-      )}
+      {/* 3. GRILLA DE MASCOTAS (Organismo PetGrid con Empty State empático) */}
+      <PetGrid
+        pets={filteredPets}
+        onResetFilters={() => {
+          setSelectedSpecies('TODOS');
+          setFilters({
+            search: '',
+            age0to1: false,
+            age1to3: false,
+            ageOver3: false,
+            onlyFavorites: false,
+            sociable: false,
+            castrated: false,
+            sex: 'TODOS',
+          });
+        }}
+      />
 
       {/* MODAL DE FILTROS SUPERPUESTO (Figma Wireframe 3) */}
       <FilterModal

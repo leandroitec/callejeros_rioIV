@@ -266,5 +266,59 @@ Este documento registra cronológicamente todas las decisiones arquitectónicas,
   - Claridad de ubicación ("¿dónde estoy y cómo vuelvo?") gracias a las migas de pan.
   - Lenguaje empático y humano que genera cercanía afectiva con adoptantes y donantes.
 
+---
+
+## [ADR-014] · [2026-10-22 22:10] Sistemas de Diseño: Diseño Atómico (Atomic Design) y Microinteracciones Fluidas con Smart Animate (Clase 9)
+
+- **Estado**: Aceptado
+- **Contexto**:
+  Bajo los conceptos de la **Clase 9: Sistemas de Diseño, Diseño Atómico y Microinteracciones**, se requería estructurar y escalar el sistema de componentes de "Callejeros Río IV" aplicando la metodología de Diseño Atómico de Brad Frost y dotar a la interfaz de feedback visual inmediato y microinteracciones de alta fidelidad similares a Smart Animate de Figma.
+- **Decisión**:
+  1. **Reestructuración con Diseño Atómico**:
+     - **`/atoms` (Átomos)**: Elementos indivisibles que encapsulan estilos base y tokens: `Button` (5 estados interactivos), `Input` (touch target gigante y alto contraste), `Label` (accesible), `Badge` (estados semánticos de mascotas), `ToggleSwitch` (Smart Animate) y `Breadcrumbs` (migas de pan).
+     - **`/molecules` (Moléculas)**: Combinaciones funcionales de átomos: `PetCard` (consume `Badge` y `Button` con elevación física), `SearchBar` (consume `Input` con botón de limpieza y lupa), `AccordionItem` (consume rotación fluida y revelación).
+     - **`/organisms` (Organismos)**: Estructuras complejas de interfaz: `Navbar` (consume `Button`, Drawer deslizante), `Footer` (enlaces y contacto comunitario), `PetGrid` (consume `PetCard` y gestiona Empty States), `FilterModal` (consume `SearchBar`, `ToggleSwitch` y `Button`), `SuccessModal` (confirmación emocional).
+     - **Regla de Consumo Unidireccional**: Los organismos consumen moléculas y átomos; las moléculas consumen átomos; garantizando desacoplamiento, mantenibilidad y reusabilidad.
+  2. **Microinteracciones y Feedback Visual**:
+     - **Respuesta háptica y de elevación**: Botones y tarjetas implementan `transition-all duration-300 ease-in-out`, elevación `hover:-translate-y-1 hover:shadow-xl` y compresión táctil `active:scale-95`.
+     - **Efecto Dissolve (Fade-in)**: Mensajes flotantes de error y confirmación en formularios de reporte mediante `animate-in fade-in duration-300 ease-out`.
+     - **Efecto Slide in/out**: El menú lateral (Drawer) en mobile implementa `transition-transform duration-300 ease-in-out` (`translate-x-full` -> `translate-x-0`), y los modales deslizan suavemente desde los bordes (`slide-in-from-bottom duration-300`).
+  3. **Componente ToggleSwitch (Smart Animate Translation)**:
+     - Implementado en `src/components/atoms/ToggleSwitch.tsx` replicando con precisión la transición de Figma:
+       - Estado Inactivo (Off): fondo gris neutro `bg-slate-300 dark:bg-slate-700`, thumb a la izquierda (`translate-x-0`), sombra interna sutil `shadow-inner`.
+       - Estado Activo (On): fondo verde éxito `bg-green-500` (o primario `bg-orange-600`), thumb trasladado a la derecha (`translate-x-5`) con `transition-transform duration-300 ease-in-out`.
+       - Cumplimiento WCAG AA: `role="switch"`, `aria-checked`, anillo visible `focus-visible:ring-2`.
+- **Consecuencias**:
+  - Arquitectura de componentes altamente predecible, escalable y modular.
+  - Experiencia de usuario viva, receptiva y placentera sin latencias percibidas.
+  - Eliminación de saltos bruscos en el DOM gracias a transiciones estandarizadas a 300ms.
+
+---
+
+## [ADR-015] · [2026-10-22 22:25] Auditoría Integral de UX Writing, Accesibilidad Digital (WCAG 2.1 AA/AAA) y Patrones de Interacción Inclusiva
+
+- **Estado**: Aceptado
+- **Contexto**:
+  La plataforma requería elevar sus estándares de comunicación y accesibilidad universal:
+  1. Erradicar copys mecánicos o robóticos ("Enviar", "Aceptar", "Buscar", "Campo obligatorio") adoptando la voz de marca en voseo argentino empático y orientado a la acción comunitaria.
+  2. Cumplir con WCAG 2.1 AA (y criterios selectos AAA) garantizando contraste cromático de al menos 4.5:1 bajo luz solar extrema en smartphones, áreas de toque mínimas de 48px (`min-h-[48px]`), no dependencia exclusiva del color en estados de error/éxito, soporte robusto para lectores de pantalla (`aria-label`, `aria-describedby`, `role="status"`, `aria-live="polite"`) y prevención de auto-zoom en iOS Safari (`text-base`).
+- **Decisión**:
+  1. **UX Writing y Microcopys Funcionales**:
+     - *Botones de Acción*: Reemplazo sistemático de "Enviar" o "Aceptar" por llamadas a la acción directas ("Publicar Alerta Comunitaria Ahora", "Aplicar filtros y ver compañeros", "Ir al Catálogo de Adopciones").
+     - *Validación Humanizada*: Mensajes de error que orientan y explican el porqué ("Ingresá un teléfono con código de área para que los vecinos te contacten al instante si lo ven", "Escribí al menos 10 caracteres describiendo su tamaño o pelaje").
+     - *Empty States Empáticos*: En el catálogo de adopciones, cuando no hay resultados, se ofrece contención positiva ("No encontramos ningún callejerito con esos filtros") con llamada constructiva ("Probá ajustando la búsqueda o sumate como hogar de tránsito").
+     - *Modales Cálidos*: Mensajes de confirmación que agradecen la involucración del vecino ("¡Muchas gracias por involucrarte!").
+  2. **Accesibilidad Digital WCAG 2.1 AA**:
+     - *Contraste (WCAG 1.4.3)*: Reemplazo de tonos de bajo contraste como `text-slate-400` sobre fondos blancos por `text-slate-600` o `text-slate-700` (>5.5:1), garantizando visibilidad en la calle bajo luz solar.
+     - *Target Size (WCAG 2.5.5 / 2.5.8)*: Establecimiento de `min-h-[48px]` o `min-h-[56px]` en todos los botones, selectores y enlaces de navegación móvil.
+     - *Uso del Color (WCAG 1.4.1)*: Asociación de iconos semánticos (`AlertCircle`, `CheckCircle2`) a todos los mensajes de validación y estado, evitando comunicar información únicamente por el matiz cromático.
+     - *Semántica y Accesibilidad (WCAG 4.1.2)*: Inclusión de `aria-label` descriptivos en botones de sólo icono (tema oscuro/claro, campana de alertas, menú hamburguesa, botón de cerrar modal).
+     - *Prevención de Zoom Móvil*: Inputs con `text-base` (16px) como tamaño mínimo para evitar el zoom automático disruptivo de iOS/Android.
+- **Consecuencias**:
+  - Calidad de producto de grado senior y cumplimiento de normativas internacionales de accesibilidad.
+  - Mayor tasa de conversión en reportes de extravío y adopciones gracias a la claridad y calidez del lenguaje.
+  - Experiencia optimizada para usuarios con discapacidad visual o motriz, y para rescatistas operando en condiciones adversas en la vía pública.
+
+
 
 

@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Heart, CreditCard, ShieldCheck, CheckCircle2, ChevronLeft, Sparkles } from 'lucide-react';
-import { SuccessModal } from '@/components/modals/SuccessModal';
-import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import { SuccessModal } from '@/components/organisms/SuccessModal';
+import { Breadcrumbs } from '@/components/atoms/Breadcrumbs';
 
 export default function PadrinosPage() {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
