@@ -347,6 +347,33 @@ Este documento registra cronológicamente todas las decisiones arquitectónicas,
   - Cero callejones sin salida en los flujos principales de navegación.
   - Experiencia 100% interactiva, coherente y funcional en todas las rutas y componentes.
 
+---
+
+## [ADR-017] · [2026-10-23 22:45] Refactorización de Navbar (UI & Gestalt), Corrección de Desborde Responsivo en Alertas Móviles y Expansión del Dataset Mock
+
+- **Estado**: Aceptado
+- **Contexto**:
+  1. *Refactorización Navbar (UI & Gestalt)*: El isotipo del Navbar era demasiado pequeño (`w-10 h-10`) y el texto adyacente ("Callejeros Río IV") generaba redundancia y ruido visual compitiendo con los enlaces de navegación. Además, la alineación en pantallas medianas carecía de simetría horizontal/vertical balanceada.
+  2. *Bug de Desborde Responsivo Móvil*: Al pulsar el ícono de la campana de notificaciones ("Alertas") en dispositivos móviles (pantallas < 640px), el popover flotante `absolute right-0 w-80 sm:w-96` se posicionaba con un desplazamiento relativo interno que desbordaba el ancho total de pantalla (`100vw`), introduciendo un scroll horizontal destructivo y cortes visuales en la interfaz.
+  3. *Volumen de Datos del Catálogo*: La grilla de adopciones y la base SQLite contenían únicamente 7 mascotas, lo que resultaba insuficiente para demostrar paginación fluida, diversidad de barrios de Río Cuarto y filtros cruzados (perros/gatos, tamaños, edades).
+- **Decisión**:
+  1. **Navbar Limpio y Protagónico**:
+     - Se eliminó el texto `"Callejeros Río IV"` del Navbar.
+     - Se aumentó el tamaño del logo a `w-16 h-16 sm:w-20 sm:h-20` con bordes redondeados `rounded-2xl`, borde naranja `border-2 border-orange-500` y microinteracción `hover:scale-105` bajo la Ley de Figura-Fondo de Gestalt.
+     - Altura del header incrementada a `h-20 sm:h-24` con distribución simétrica `flex items-center justify-between gap-4`.
+  2. **Corrección de Bug Responsive (Mobile-First)**:
+     - En pantallas móviles (< 640px), el panel de alertas se desvincula de las coordenadas relativas del botón y adopta posicionamiento `fixed left-4 right-4 top-22` con `max-w-[calc(100vw-2rem)]`, garantizando márgenes simétricos seguros de 16px en ambos extremos de la pantalla y anulando cualquier posibilidad de scroll horizontal.
+     - En escritorio (`sm:` en adelante), preserva su comportamiento natural como popover anclado: `sm:absolute sm:left-auto sm:right-0 sm:top-auto sm:mt-2 sm:w-96 sm:max-w-none origin-top sm:origin-top-right`.
+     - Se reforzó la protección global contra desborde con `overflow-x-hidden` en `html`, `body` y `<main>` en `layout.tsx` y `globals.css`.
+     - Se añadió un telón de fondo táctil para móviles (`fixed inset-0 z-40 bg-black/30 backdrop-blur-xs sm:hidden`) que permite cerrar el panel con un toque intuitivo fuera del área.
+  3. **Ampliación del Catálogo Mock (+10 Mascotas)**:
+     - Se incorporaron 6 perros nuevos (`Milo`, `Clara`, `Toby`, `Negra`, `Simón`, `Furia`) y 4 gatos nuevos (`Michi`, `Cleo`, `Oliver`, `Salem`) en `src/data/mockPets.ts` (total: 17 mascotas) con barrios auténticos de Río Cuarto (Costanera Norte, Alberdi, Centro, Bimaco, Macrocentro, Parque Sarmiento, Banda Norte, Castelli) e imágenes en alta resolución de Unsplash.
+     - Sincronización completa con SQLite mediante `prisma/seed.ts`.
+- **Consecuencias**:
+  - Navbar limpio, moderno y de impacto visual inmediato donde el logo comunica la identidad sin redundancias.
+  - Cero scroll horizontal o cortes en resoluciones móviles estándar o compactas (320px–420px).
+  - Experiencia rica y creíble en el catálogo de adopciones para pruebas locales y evaluación.
+
 
 
 

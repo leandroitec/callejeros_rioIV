@@ -61,14 +61,14 @@ export function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-neutral-200 dark:border-slate-800 transition-colors duration-300 ease-in-out">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Logo Brand */}
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between gap-4">
+          {/* Logo Brand (Sin texto, dejando que el logo hable por sí solo con tamaño jerárquico w-16 h-16 / w-20 h-20) */}
           <Link
             href="/"
-            className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 rounded-lg group"
+            className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 rounded-2xl group"
             aria-label="Ir a la página principal de Callejeros Río IV"
           >
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-orange-500 shadow-sm transition-transform duration-300 group-hover:scale-105">
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-orange-500 shadow-md transition-transform duration-300 group-hover:scale-105 shrink-0">
               <Image
                 src="/images/logo.jpg"
                 alt="Logo Callejeros Río IV - Perro y gato en abrazo solidario"
@@ -77,18 +77,10 @@ export function Navbar() {
                 priority
               />
             </div>
-            <div className="flex flex-col">
-              <span className="font-heading font-extrabold text-lg sm:text-xl text-orange-600 dark:text-orange-400 leading-tight">
-                Callejeros
-              </span>
-              <span className="font-heading font-bold text-xs sm:text-sm text-cyan-600 dark:text-cyan-400 tracking-wider">
-                Río IV
-              </span>
-            </div>
           </Link>
 
           {/* Navegación Desktop */}
-          <nav className="hidden md:flex items-center gap-6" aria-label="Navegación principal">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-6" aria-label="Navegación principal">
             <Link
               href="/"
               className="text-slate-800 dark:text-white font-bold hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-600 dark:focus-visible:ring-offset-slate-900 rounded-md py-1 px-2"
@@ -122,7 +114,7 @@ export function Navbar() {
           </nav>
 
           {/* Controles de la Barra Superior */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Toggle Dark Mode */}
             <button
               type="button"
@@ -137,7 +129,7 @@ export function Navbar() {
               )}
             </button>
 
-            {/* Campana de Notificaciones con Popover Interactivo */}
+            {/* Campana de Notificaciones con Popover Interactivo Mobile-First */}
             <div className="relative">
               <button
                 type="button"
@@ -160,12 +152,21 @@ export function Navbar() {
                 </span>
               </button>
 
-              {/* Popover flotante de Alertas */}
+              {/* Backdrop para cerrar en móvil */}
+              {isNotificationOpen && (
+                <div
+                  className="fixed inset-0 z-40 bg-black/30 backdrop-blur-xs sm:hidden"
+                  onClick={() => setIsNotificationOpen(false)}
+                  aria-hidden="true"
+                />
+              )}
+
+              {/* Popover flotante de Alertas (Corregido desborde en móvil: fixed left-4 right-4 top-22 sm:top-24 sm:absolute sm:left-auto sm:right-0 sm:mt-2 w-auto sm:w-96 max-w-[calc(100vw-2rem)] sm:max-w-none origin-top sm:origin-top-right) */}
               {isNotificationOpen && (
                 <div
                   role="region"
                   aria-label="Alertas comunitarias en vivo"
-                  className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+                  className="fixed left-4 right-4 top-22 sm:top-24 sm:absolute sm:left-auto sm:right-0 sm:mt-2 w-auto sm:w-96 max-w-[calc(100vw-2rem)] sm:max-w-none bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200 origin-top sm:origin-top-right"
                 >
                   <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
                     <h3 className="font-heading font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">

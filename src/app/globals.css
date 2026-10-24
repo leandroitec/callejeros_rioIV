@@ -20,10 +20,11 @@
   --brand-cyan: #22d3ee;
 }
 
-body {
+html, body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   overflow-x: hidden;
+  max-width: 100vw;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
 }

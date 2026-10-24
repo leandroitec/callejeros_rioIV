@@ -47,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
+    <html lang="es" className={`${inter.variable} ${poppins.variable} overflow-x-hidden`} suppressHydrationWarning>
       <body className="min-h-screen w-full overflow-x-hidden flex flex-col bg-[#FDFBF7] dark:bg-[#0F172A] text-slate-800 dark:text-slate-100 transition-colors">
         <Navbar />
         <main className="flex-1 w-full overflow-x-hidden">{children}</main>
